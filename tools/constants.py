@@ -5,6 +5,7 @@ SYCGRAM: str = "sycgram"
 SYCGRAM_INFO: str = f"{SYCGRAM.title()} | INFO"
 SYCGRAM_ERROR: str = f"{SYCGRAM.title()} | ERROR"
 SYCGRAM_WARNING: str = f"{SYCGRAM.title()} | WARNING"
+COMMAND_YML: str = './data/command.yml'
 UPDATE_CMD: str = f"""
 docker run --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
