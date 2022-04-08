@@ -1,4 +1,5 @@
-# 注意，勿随意更改顶级的Key
+# 注意，如无修改能力，勿随意更改顶级的Key
+# 建议：如无修改能力，勿改动容器名，即sycgram
 # 按需改动
 
 # 指令 - 例子 - 格式二选一
@@ -127,3 +128,13 @@ unarchive:
   cmd: unarch
   format: -unarch
   usage: 撤销归档当前对话
+
+restart:
+  cmd: restart
+  format: -restart
+  usage: 重启sycgram
+
+update:
+  cmd: update
+  format: -update
+  usage: 更新sycgram到主分支的最新版本

@@ -5,7 +5,7 @@ CONTAINER_NAME="sycgram"
 GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
 PROJECT_PATH="/opt/${CONTAINER_NAME}"
-PROJECT_VERSION="v1.0.4"
+PROJECT_VERSION="v1.0.5"
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -133,6 +133,10 @@ install_sycgram(){
     --restart always \
     --hostname ${CONTAINER_NAME} \
     -v ${PROJECT_PATH}/data:/sycgram/data \
+    # 注意这里是docker的一些默认路径
+    # 如果你有过路径更改，请按需修改即可
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v $(which docker):/usr/local/bin/docker \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
