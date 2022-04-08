@@ -15,18 +15,19 @@ from typing import Any, Dict
 import yaml
 from pyrogram import filters
 from pyrogram.types import Message
-from tools.constants import STORE_TRACE_DATA
+from tools.constants import STORE_TRACE_DATA, COMMAND_YML
 from tools.storage import SimpleStore
 
-command_data: Dict[str, Any] = yaml.full_load(open("./data/command.yml", 'rb'))
+command_data: Dict[str, Any] = yaml.full_load(open(COMMAND_YML, 'rb'))
 
 
 def command(key: str):
     """匹配UserBot指令"""
-    # 指令前缀
-    # 例一：prefixes = "-"
-    # 例二：prefixes = ["-", "/", "+"]
     prefixes = command_data.get('help').get('all_prefixes')
+    if type(command_data.get(key).get('cmd')) == str:
+        cmd = [command_data.get(key).get('cmd'), key]
+        return filters.me & filters.text & filters.command(cmd, prefixes)
+
     cmd = command_data.get(key).get('cmd')
     return filters.me & filters.text & filters.command(cmd, prefixes)
 
