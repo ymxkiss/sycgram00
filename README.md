@@ -13,7 +13,7 @@ bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/instal
 
 1. 停止容器
 2. 打包`/opt/sycgram`文件夹到新环境相同位置
-3. 在新环境使用sycgram管理脚本，选择：安装
+3. 在新环境运行sycgram管理脚本
 
 
 
@@ -27,6 +27,6 @@ bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/instal
 
 ## 注意事项
 
-- 脚本仅适用于Ubuntu/Debian
+- 脚本仅适用于Ubuntu/Debian，其它系统自行解决~
 - 按个人需求随缘更，仅用于学习用途
 - 如果号码等输入错误了，重新安装即可
