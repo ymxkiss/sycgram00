@@ -1,8 +1,10 @@
 import re
 from typing import Any, Dict
+
 import yaml
 
-from tools.constants import COMMAND_YML
+from .constants import CMD_YML_REMOTE, COMMAND_YML
+from .sessions import session
 
 
 def update_cmd_yml(cmd_yml: Dict[str, Any]):
@@ -76,3 +78,18 @@ def get_alias_of_cmds() -> str:
             f"`{k}` | `{v.get('cmd')}`\n" for k, v in cmd_yml.items()
         )
         return f"**⭐️ 指令别名：**\n**源名** | **别名**\n{tmp}"
+
+
+async def pull_and_update_command_yml() -> None:
+    # 读取远程command.yml
+    async with session.get(
+        CMD_YML_REMOTE, timeout=9.9,
+    ) as resp:
+        if resp.status == 200:
+            data = yaml.full_load(await resp.text())
+            with open(COMMAND_YML, "rb") as f:
+                cmd_yml: Dict[str, Dict[str, str]] = yaml.full_load(f)
+                data.update(cmd_yml)
+            # 合并到本地，以本地为主
+            update_cmd_yml(data)
+        resp.raise_for_status()

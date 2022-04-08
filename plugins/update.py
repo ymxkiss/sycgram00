@@ -8,13 +8,15 @@ from pyrogram.types import Message
 from tools.constants import (SYCGRAM, SYCGRAM_ERROR, SYCGRAM_INFO,
                              SYCGRAM_WARNING, UPDATE_CMD)
 from tools.helpers import Parameters, basher, get_cmd_error
-from tools.updates import get_alias_of_cmds, reset_cmd_alias, update_cmd_alias, update_cmd_prefix
+from tools.updates import (get_alias_of_cmds, pull_and_update_command_yml,
+                           reset_cmd_alias, update_cmd_alias,
+                           update_cmd_prefix)
 
 
 @Client.on_message(command("restart"))
 async def restart(_: Client, msg: Message):
     """重启容器"""
-    text = f"**{SYCGRAM_INFO}**\n> # `Restarting {SYCGRAM} ......`"
+    text = f"**{SYCGRAM_INFO}**\n> # `Restarting {SYCGRAM} ...`"
     await msg.edit_text(text=text, parse_mode='md')
     sys.exit()
 
@@ -22,16 +24,17 @@ async def restart(_: Client, msg: Message):
 @Client.on_message(command("update"))
 async def update(_: Client, msg: Message):
     """更新sycgram到主分支的最新版本"""
-    text = f"**{SYCGRAM_INFO}**\n> # `It's updating container to the latest version......`"
+    text = f"**{SYCGRAM_INFO}**\n> # `It's updating {SYCGRAM} ...`"
     await msg.edit_text(text, parse_mode='md')
     try:
+        await pull_and_update_command_yml()
         _ = await basher(UPDATE_CMD, timeout=60)
     except asyncio.exceptions.TimeoutError:
         text = f"**{SYCGRAM_WARNING}**\n> # `Update Timeout！`"
     except Exception as e:
         text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
     else:
-        text = f"**{SYCGRAM_INFO}**\n> # `Your {SYCGRAM} version is the latest.`"
+        text = f"**{SYCGRAM_INFO}**\n> # `{SYCGRAM.title()} is already the latest version.`"
     finally:
         await msg.edit_text(text, parse_mode='md')
 
