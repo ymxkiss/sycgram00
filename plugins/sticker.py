@@ -28,7 +28,7 @@ async def sticker_event(cli: Client, msg: Message):
     await logger.complete()
 
 
-@Client.on_message(command('s'))
+@Client.on_message(command('sticker'))
 async def sticker(cli: Client, msg: Message):
     """
     用法一：-s <emoji|无> 回复一条消息
