@@ -47,6 +47,14 @@ pre_check() {
 delete_old_image_and_container(){
     # 获取最新指令说明
     # 远程file
+    echo -e "${red}警告！警告！警告！${plain}"
+    echo -e "${red}警告：通过脚本更新sycgram可能会导致您的command.yml被远程配置覆盖${plain}"
+    echo -e "${yellow}提示：如果您的command.yml相对不重要，您可以直接更新${plain}"
+    echo -e "${yellow}建议：通过sycgram指令更新${plain}"
+    read -p "是否继续，是则请输入yes：" opt
+    if [[ ${opt} != "yes" ]]; then
+        exit 0
+    fi
     remote_file="https://raw.githubusercontent.com/iwumingz/sycgram/main/data/command.yml"
     # 本地file
     local_cmd_file="${PROJECT_PATH}/data/command.yml"
