@@ -118,7 +118,12 @@ tg:
   format: -tg
   usage: 舔狗语录
 
-test:
-  cmd: t
-  format: -t
-  usage: 测试
+archive:
+  cmd: arch
+  format: -arch
+  usage: 归档当前对话
+
+unarchive:
+  cmd: unarch
+  format: -unarch
+  usage: 撤销归档当前对话
