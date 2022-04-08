@@ -59,7 +59,7 @@ delete_old_image_and_container(){
     # 本地file
     local_cmd_file="${PROJECT_PATH}/data/command.yml"
     if [[ -f ${local_cmd_file} ]]; then
-        t=$(date "+%H_%M_%M")
+        t=$(date "+%Y_%m_%d_%H_%M_%M")
         mkdir -p "${PROJECT_PATH}/data/command" >/dev/null 2>&1
 
         echo -e "${yello}正在备份${plain} >>> ${local_cmd_file}"

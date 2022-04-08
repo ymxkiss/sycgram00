@@ -3,7 +3,7 @@
 ## 安装与更新
 
 ```shell
-# 如果选择的是安装，则安装成功后，可先使用Ctrl+P，然后使用Ctrl+Q挂到后台运行
+# 脚本的【安装】都是前台运行，完成安装后如无报错可先后使用Ctrl+P、Ctrl+Q挂到后台运行
 bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/install.sh")
 ```
 
@@ -13,15 +13,15 @@ bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/instal
 
 1. 停止容器
 2. 打包`/opt/sycgram`文件夹到新环境相同位置
-3. 在新环境使用sycgram管理脚本，选择：更新
+3. 在新环境使用sycgram管理脚本，选择：安装
 
 
 
-## 自定义指令及指令前缀
+## 自定义指令前缀及指令别名
 
-- 请根据需要修改`/opt/sycgram/data/command.yml`内容即可
-- 每次更新都会自动将原来的`command.yml`备份命名为`command.yml.bk`
-- 每次更新的新指令的格式用法只会在`command.yml`末尾补充
+- 每次通过脚本更新【建议指令更新】都会覆盖本地的`command.yml`，原文件会备份到`command目录`
+- 可以通过指令修改前缀和别名
+- 指令别名只支持单别名和源名（不再支持多别名）
 
 
 
