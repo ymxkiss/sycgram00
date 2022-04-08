@@ -39,7 +39,7 @@ async def get_api(api: str, msg: Message) -> None:
             logger.error(e)
             continue
         words = f"{msg.reply_to_message.from_user.mention(style='md')} {text}" \
-            if msg.reply_to_message else text
+            if msg.reply_to_message and msg.reply_to_message.from_user else text
         try:
             await msg.edit_text(words, parse_mode='md')
         except FloodWait as e:

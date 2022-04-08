@@ -75,7 +75,7 @@ speedtest:
   format: -speedtest <无|节点ID|list|update>
   usage: 服务器本地网络测速
 
-s:
+sticker:
   cmd: s
   format: -s <无|emoji> or -s <sticker_set_title> <sticker_set_name>
   usage:
@@ -115,5 +115,10 @@ diss:
 
 tg:
   cmd: tg
-  format: -biss
+  format: -tg
   usage: 舔狗语录
+
+test:
+  cmd: t
+  format: -t
+  usage: 测试

@@ -46,14 +46,15 @@ async def cc(cli: Client, msg: Message):
     # 攻击次数
     cc_times = cc_times if 1 <= cc_times <= CC_MAX_TIMES else CC_MAX_TIMES
     cc_msgs: List[int] = []
+    from_user_id = replied_msg.from_user.id if replied_msg.from_user else replied_msg.sender_chat.id
 
     # 遍历和搜索消息
     if msg.chat.type in TG_GROUPS:
         async for target in cli.search_messages(
             chat_id=msg.chat.id, limit=1000,
-            from_user=replied_msg.from_user.id,
+            from_user=from_user_id,
         ):
-            if target.message_id > 1 and target.from_user:
+            if target.message_id > 1 and (target.from_user or target.sender_chat):
                 cc_msgs.append(target.message_id)
                 if len(cc_msgs) == cc_times:
                     break
@@ -68,12 +69,12 @@ async def cc(cli: Client, msg: Message):
     if len(cc_msgs) > 0:
         await msg.edit_text("🔥 `Attacking ...`")
         shot = 0
-        for n, target_id in enumerate(cc_msgs):
+        for n, cc_msg_id in enumerate(cc_msgs):
             try:
                 res = await emoji_sender(
                     cli=cli,
                     chat_id=msg.chat.id,
-                    msg_id=target_id,
+                    msg_id=cc_msg_id,
                     emoji=cc_emoji
                 )
             except FloodWait as e:
@@ -81,7 +82,7 @@ async def cc(cli: Client, msg: Message):
                 res = await emoji_sender(
                     cli=cli,
                     chat_id=msg.chat.id,
-                    msg_id=target_id,
+                    msg_id=cc_msg_id,
                     emoji=cc_emoji
                 )
 

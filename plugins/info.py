@@ -10,14 +10,22 @@ async def get_id(_: Client, msg: Message):
     text = f"Message ID: `{msg.message_id}`\n\n" \
            f"Chat Title: `{msg.chat.title}`\n" \
            f"Chat Type: `{msg.chat.type}`\n" \
-           f"Chat ID: `{msg.chat.id}`"
+           f"Chat ID: `{msg.chat.id}`" \
 
-    if msg.reply_to_message:
-        user = msg.reply_to_message.from_user
-        text = f"Repiled Message ID: `{msg.reply_to_message.message_id}`\n\n" \
+    replied_msg = msg.reply_to_message
+    if replied_msg and replied_msg.from_user:
+        user = replied_msg.from_user
+        text = f"Repiled Message ID: `{replied_msg.message_id}`\n\n" \
                f"User Nick: `{get_fullname(user)}`\n"\
                f"User Name: `@{user.username}`\n" \
                f"User ID: `{user.id}`\n\n" \
+               f"{text}"
+    elif replied_msg and replied_msg.sender_chat:
+        sender_chat = replied_msg.sender_chat
+        text = f"Repiled Message ID: `{replied_msg.message_id}`\n\n" \
+               f"Chat Title: `{sender_chat.title}`\n" \
+               f"Chat Type: `{sender_chat.type}`\n" \
+               f"Chat ID: `{sender_chat.id}`\n\n" \
                f"{text}"
 
     await msg.edit_text(text)
