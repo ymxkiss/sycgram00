@@ -5,7 +5,7 @@ CONTAINER_NAME="sycgram"
 GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
 PROJECT_PATH="/opt/${CONTAINER_NAME}"
-PROJECT_VERSION="v1.0.3"
+PROJECT_VERSION="v1.0.4"
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -129,7 +129,7 @@ install_sycgram(){
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
     --name ${CONTAINER_NAME} \
-    --env TZ="Asia/Shanghai" \
+    --env TZ=$(timedatectl | grep "Time zone" | awk '{print $3}') \
     --restart always \
     --hostname ${CONTAINER_NAME} \
     -v ${PROJECT_PATH}/data:/sycgram/data \
