@@ -136,7 +136,7 @@ install_sycgram(){
     # 注意这里是docker的一些默认路径
     # 如果你有过路径更改，请按需修改即可
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -v $(which docker):/usr/local/bin/docker \
+    -v /usr/bin/docker:/usr/local/bin/docker \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
