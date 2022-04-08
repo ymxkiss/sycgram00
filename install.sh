@@ -126,6 +126,8 @@ install_sycgram(){
     echo -e "${yellow}正在拉取镜像...${plain}"
     docker pull ${GITHUB_IMAGE_PATH}:latest
 
+    # 注意这里是docker的一些默认路径
+    # 如果你有过路径更改，请按需修改即可
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
     --name ${CONTAINER_NAME} \
@@ -133,8 +135,6 @@ install_sycgram(){
     --restart always \
     --hostname ${CONTAINER_NAME} \
     -v ${PROJECT_PATH}/data:/sycgram/data \
-    # 注意这里是docker的一些默认路径
-    # 如果你有过路径更改，请按需修改即可
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /usr/bin/docker:/usr/local/bin/docker \
     ${GITHUB_IMAGE_PATH}:latest
