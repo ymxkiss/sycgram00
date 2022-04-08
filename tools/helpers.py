@@ -156,8 +156,8 @@ async def execute(command: str) -> Dict[str, Any]:
         return {'output': '', 'error': str(e)}
     else:
         return {
-            'output': stdout.decode('utf-8', 'ignore'),
-            'error': stderr.decode('utf-8', 'ignore')
+            'output': stdout.decode('utf-8', 'ignore').strip(),
+            'error': stderr.decode('utf-8', 'ignore').strip()
         }
 
 

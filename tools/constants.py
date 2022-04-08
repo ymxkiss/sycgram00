@@ -1,5 +1,18 @@
 from typing import Dict, List
 
+# Some params of sycgram
+SYCGRAM: str = "sycgram"
+SYCGRAM_INFO: str = f"{SYCGRAM.title()} | INFO"
+SYCGRAM_ERROR: str = f"{SYCGRAM.title()} | ERROR"
+SYCGRAM_WARNING: str = f"{SYCGRAM.title()} | WARNING"
+UPDATE_CMD: str = f"""
+docker run --rm \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    containrrr/watchtower \
+    --cleanup \
+    --run-once \
+    {SYCGRAM}
+"""
 
 # ------------- rate --------------
 RATE_API: str = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies'
