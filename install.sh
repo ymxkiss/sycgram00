@@ -129,7 +129,7 @@ install_sycgram(){
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
     --name ${CONTAINER_NAME} \
-    --env TZ=$(timedatectl | grep "Time zone" | awk '{print $3}') \
+    --env TZ=$(cat /etc/timezone) \
     --restart always \
     --hostname ${CONTAINER_NAME} \
     -v ${PROJECT_PATH}/data:/sycgram/data \
