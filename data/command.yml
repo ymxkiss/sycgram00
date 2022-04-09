@@ -2,13 +2,11 @@
 # 建议：如无修改能力，勿改动容器名，即sycgram
 # 按需改动
 
-# 指令 - 例子 - 格式二选一
+# 指令 - 例子 - 格式
 # cmd: "help"
-# cmd: ["help", "helper"]
 
-# 指令前缀 - 例子 - 格式二选一
+# 指令前缀 - 例子 - 格式
 # all_prefixes:"-"
-# all_prefixes: ["-", "/", "+"]
 
 help:
   all_prefixes: "-"
@@ -148,3 +146,13 @@ alias:
   cmd: alias
   format: -alias <set> <source> <to> or -alias <reset> <source> or -alias <list>
   usage: 修改指令别名
+
+upload:
+  cmd: upload
+  format: -upload <文件路径>
+  usage: 上传容器内文件至当前对话
+
+download:
+  cmd: download
+  format: -download
+  usage: 回复一条文件/视频/图片/音乐等可下载的消息，存放至容器默认挂载的目录

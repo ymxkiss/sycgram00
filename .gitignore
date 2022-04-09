@@ -133,6 +133,7 @@ data/app*
 data/config*
 data/log*
 data/img*
+data/download*
 *.debug.sh
 READ.md
 .deprecated
