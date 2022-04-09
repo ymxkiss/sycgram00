@@ -5,9 +5,10 @@ from loguru import logger
 from pyrogram import Client, filters
 from pyrogram.errors import RPCError
 from pyrogram.types import Message
-from tools.constants import STORE_GHOST_DATA
+from tools.constants import STORE_GHOST_DATA, TG_PRIVATE
 from tools.ghosts import get_ghost_to_read
-from tools.helpers import Parameters, delete_this, get_fullname
+from tools.helpers import (Parameters, delete_this, get_fullname,
+                           get_sender_name)
 from tools.storage import SimpleStore
 
 
@@ -21,8 +22,10 @@ async def ghost_event(cli: Client, msg: Message):
             logger.error(e)
         else:
             if msg.text or msg.caption:
-                text = msg.text or msg.text
-                text = f"Ghost | {msg.chat.title} | {get_fullname(msg.from_user)} | {text}"
+                chat_name = msg.chat.title or TG_PRIVATE
+                sender_name = get_sender_name(msg)
+                text = msg.text or msg.caption
+                text = f"Ghost | {chat_name} | {sender_name} | {text}"
                 logger.debug(text)
         finally:
             await logger.complete()
