@@ -16,6 +16,9 @@ docker run --rm \
     {SYCGRAM}
 """
 
+# ------------- Load --------------
+DOWNLOAD_PATH: str = './data/download/'
+
 # ------------- rate --------------
 RATE_API: str = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies'
 HTTP_HEADERS: Dict[str, str] = {

@@ -1,0 +1,50 @@
+from datetime import datetime
+import os
+
+from core import command
+from loguru import logger
+from pyrogram import Client
+from pyrogram.types import Message
+from tools.constants import DOWNLOAD_PATH
+from tools.helpers import Parameters, show_cmd_tip, show_exception
+
+
+@Client.on_message(command("upload"))
+async def upload(cli: Client, msg: Message):
+    """上传容器内的文件"""
+    cmd, where = Parameters.get(msg)
+    if not where:
+        return await show_cmd_tip(msg, cmd)
+    replied_msg_id = msg.reply_to_message.message_id \
+        if msg.reply_to_message else None
+    _, filename = os.path.split(where)
+    try:
+        await cli.send_document(
+            chat_id=msg.chat.id,
+            document=where,
+            file_name=filename,
+            reply_to_message_id=replied_msg_id
+        )
+    except Exception as e:
+        return await show_exception(msg, e)
+
+
+@Client.on_message(command("download"))
+async def download(_: Client, msg: Message):
+    """下载目标消息的文件到挂载目录"""
+    cmd, where = Parameters.get(msg)
+    replied_msg = msg.reply_to_message
+    if not replied_msg:
+        return await show_cmd_tip(msg, cmd)
+    if replied_msg.sticker:
+        creation = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+        file_name = f"{DOWNLOAD_PATH}sticker_{creation}.webp"
+    else:
+        file_name = DOWNLOAD_PATH if not where else where
+    try:
+        await replied_msg.download(file_name=file_name)
+    except ValueError:
+        return await show_cmd_tip(msg, cmd)
+    except Exception as e:
+        logger.error(e)
+        return await show_exception(msg, e)
