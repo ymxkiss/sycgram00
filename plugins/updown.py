@@ -1,5 +1,4 @@
 import asyncio
-from datetime import datetime
 import os
 
 from core import command
@@ -43,13 +42,10 @@ async def download(_: Client, msg: Message):
     replied_msg = msg.reply_to_message
     if not replied_msg:
         return await show_cmd_tip(msg, cmd)
-    if replied_msg.sticker:
-        creation = datetime.strftime(datetime.now(), '%Y_%m_%d_%H_%M_%S')
-        file_name = f"{DOWNLOAD_PATH}sticker_{creation}.webp"
-    else:
-        file_name = DOWNLOAD_PATH if not where else where
+
     try:
-        res = await replied_msg.download(file_name=file_name)
+        res = await replied_msg.download(
+            file_name=DOWNLOAD_PATH if not where else where)
     except ValueError:
         return await show_cmd_tip(msg, cmd)
     except Exception as e:
