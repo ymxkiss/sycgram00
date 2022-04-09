@@ -8,9 +8,9 @@ from tools.helpers import get_fullname
 async def get_id(_: Client, msg: Message):
     """直接使用或者回复目标消息，从而获取各种IDs"""
     text = f"Message ID: `{msg.message_id}`\n\n" \
-           f"Chat Title: `{msg.chat.title}`\n" \
+           f"Chat Title: `{msg.chat.title or msg.chat.first_name}`\n" \
            f"Chat Type: `{msg.chat.type}`\n" \
-           f"Chat ID: `{msg.chat.id}`" \
+           f"Chat ID: `{msg.chat.id}`"
 
     replied_msg = msg.reply_to_message
     if replied_msg and replied_msg.from_user:
