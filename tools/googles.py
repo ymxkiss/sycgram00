@@ -18,6 +18,8 @@ async def google_search(content: str) -> Dict[str, str]:
                 if p.parent.has_attr('href'):
                     result[p.text] = p.parent.attrs.get('href')
                     logger.info(f"Google | Searching | {result[p.text]}")
+                    if len(result) > 10:
+                        break
             return result
 
         resp.raise_for_status()
