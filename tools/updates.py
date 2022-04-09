@@ -71,13 +71,10 @@ def reset_cmd_alias(source: str) -> None:
         update_cmd_yml(cmd_yml=cmd_yml)
 
 
-def get_alias_of_cmds() -> str:
+def get_alias_of_cmds() -> Dict[str, str]:
     with open(COMMAND_YML, "rb") as f:
         cmd_yml: Dict[str, Dict[str, str]] = yaml.full_load(f)
-        tmp = ''.join(
-            f"`{k}` | `{v.get('cmd')}`\n" for k, v in cmd_yml.items()
-        )
-        return f"**⭐️ 指令别名：**\n**源名** | **别名**\n{tmp}"
+        return dict(zip(cmd_yml.keys(), (v.get('cmd') for v in cmd_yml.values())))
 
 
 async def pull_and_update_command_yml() -> None:
