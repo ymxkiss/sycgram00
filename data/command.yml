@@ -160,4 +160,4 @@ download:
 ip:
   cmd: ip
   format: -ip <IP地址|域名>
-  usage: 查询IP信息
+  usage: 查询IP地址或域名的信息
