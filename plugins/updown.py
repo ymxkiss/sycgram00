@@ -44,7 +44,7 @@ async def download(_: Client, msg: Message):
     if not replied_msg:
         return await show_cmd_tip(msg, cmd)
     if replied_msg.sticker:
-        creation = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+        creation = datetime.strftime(datetime.now(), '%Y_%m_%d_%H_%M_%S')
         file_name = f"{DOWNLOAD_PATH}sticker_{creation}.webp"
     else:
         file_name = DOWNLOAD_PATH if not where else where
