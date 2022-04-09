@@ -1,4 +1,5 @@
 import asyncio
+import re
 
 from core import command
 from loguru import logger
@@ -6,24 +7,28 @@ from pyrogram import Client
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message
 from tools.googles import google_search
-from tools.helpers import Parameters
+from tools.helpers import Parameters, show_cmd_tip, show_exception
 
 
 @Client.on_message(command("google"))
 async def google(_: Client, msg: Message):
     """谷歌搜索并展示第一页结果和链接"""
+    cmd, args = Parameters.get(msg)
     replied_msg = msg.reply_to_message
-    if not replied_msg:
-        _, args = Parameters.get(msg)
+    if not args and replied_msg and (replied_msg.text or replied_msg.caption):
+        pattern = replied_msg.text or replied_msg.caption
+    elif args:
+        pattern = args
     else:
-        args = replied_msg.text or replied_msg.caption
+        return await show_cmd_tip(msg, cmd)
 
     try:
-        res = await google_search(args)
-        content = '\n\n'.join(
+        res = await google_search(pattern)
+        links = '\n\n'.join(
             f"[{title[0:30]}]({url})" for title, url in res.items()
         )
-        text = f"🔎 | **Google** | `{args}`\n{content}"
+        pattern = re.sub(r'[_*`[]', '', pattern[0:30])
+        text = f"🔎 | **Google** | `{pattern}`\n{links}"
         await msg.edit_text(
             text=text,
             parse_mode='md',
@@ -38,6 +43,6 @@ async def google(_: Client, msg: Message):
         )
     except Exception as e:
         logger.error(e)
-        await msg.edit_text("❗️ Unable to connect to google")
+        await show_exception(msg, "Unable to connect to google")
     finally:
         await logger.complete()
