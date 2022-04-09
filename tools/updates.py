@@ -77,16 +77,15 @@ def get_alias_of_cmds() -> Dict[str, str]:
         return dict(zip(cmd_yml.keys(), (v.get('cmd') for v in cmd_yml.values())))
 
 
-async def pull_and_update_command_yml() -> None:
+async def pull_and_update_command_yml(is_update: bool = True) -> None:
     # 读取远程command.yml
-    async with session.get(
-        CMD_YML_REMOTE, timeout=9.9,
-    ) as resp:
+    async with session.get(CMD_YML_REMOTE, timeout=9.9) as resp:
         if resp.status == 200:
             data = yaml.full_load(await resp.text())
-            with open(COMMAND_YML, "rb") as f:
-                cmd_yml: Dict[str, Dict[str, str]] = yaml.full_load(f)
-                data.update(cmd_yml)
+            if is_update:
+                with open(COMMAND_YML, "rb") as f:
+                    cmd_yml: Dict[str, Dict[str, str]] = yaml.full_load(f)
+                    data.update(cmd_yml)
             # 合并到本地，以本地为主
             update_cmd_yml(data)
         resp.raise_for_status()

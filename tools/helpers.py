@@ -66,6 +66,12 @@ def get_dc_text(name: str, dc_id: int) -> str:
         return "❗️ 无法获取该用户/群组的数据中心 ..."
 
 
+def get_sender_name(msg: Message) -> str:
+    if msg.from_user:
+        return get_fullname(msg.from_user)
+    return msg.sender_chat.title
+
+
 def get_fullname(user: User) -> str:
     if user:
         if user.last_name:
