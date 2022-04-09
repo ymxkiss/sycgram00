@@ -18,18 +18,18 @@ from pyrogram.types import Message
 from tools.constants import STORE_TRACE_DATA, COMMAND_YML
 from tools.storage import SimpleStore
 
-command_data: Dict[str, Any] = yaml.full_load(open(COMMAND_YML, 'rb'))
+CMDS_DATA: Dict[str, Any] = yaml.full_load(open(COMMAND_YML, 'rb'))
+CMDS_PREFIX = CMDS_DATA.get('help').get('all_prefixes')
 
 
 def command(key: str):
     """匹配UserBot指令"""
-    prefixes = command_data.get('help').get('all_prefixes')
-    if type(command_data.get(key).get('cmd')) == str:
-        cmd = [command_data.get(key).get('cmd'), key]
-        return filters.me & filters.text & filters.command(cmd, prefixes)
+    if type(CMDS_DATA.get(key).get('cmd')) == str:
+        cmd = [CMDS_DATA.get(key).get('cmd'), key]
+        return filters.me & filters.text & filters.command(cmd, CMDS_PREFIX)
 
-    cmd = command_data.get(key).get('cmd')
-    return filters.me & filters.text & filters.command(cmd, prefixes)
+    cmd = CMDS_DATA.get(key).get('cmd')
+    return filters.me & filters.text & filters.command(cmd, CMDS_PREFIX)
 
 
 def is_traced():

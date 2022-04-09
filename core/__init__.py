@@ -1,4 +1,4 @@
-from .custom import command
+from .custom import command, CMDS_DATA, CMDS_PREFIX
 from pyrogram import Client
 
 app = Client(
@@ -9,5 +9,8 @@ app = Client(
 
 
 __all__ = (
-    'app', 'command',
+    'app',
+    'command',
+    'CMDS_DATA',
+    'CMDS_PREFIX',
 )
