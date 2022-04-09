@@ -3,12 +3,13 @@ import re
 from typing import Any, Dict, List, Tuple, Union
 
 from bs4 import BeautifulSoup
+from core.custom import CMDS_PREFIX
 from loguru import logger
 from pyrogram import Client
 from pyrogram.errors import FloodWait, RPCError
 from pyrogram.types import Message, User
 
-from .constants import STICKER_DESCRIP
+from .constants import STICKER_DESCRIP, SYCGRAM_ERROR, SYCGRAM_INFO
 from .sessions import session
 
 
@@ -86,8 +87,15 @@ def is_deleted_id(msg: Message) -> bool:
     return bool(msg.message_id > 1 and msg.from_user and msg.from_user.is_self)
 
 
-def get_cmd_error(cmd: str) -> str:
-    return f"Use `-help {cmd.replace('-', '', 1)}` to view detailed usage."
+async def show_exception(msg: Message, e: Any) -> None:
+    text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
+    await msg.edit_text(text, parse_mode='md')
+
+
+async def show_cmd_tip(msg: Message, cmd: str) -> str:
+    tip = f"Use `{CMDS_PREFIX}help {cmd.replace(CMDS_PREFIX, '', 1)}` to view detailed usage."
+    text = f"**{SYCGRAM_INFO}**\n> # {tip}"
+    await msg.edit_text(text, parse_mode='md')
 
 
 async def check_if_package_existed(pkg_name: str) -> bool:
@@ -159,10 +167,6 @@ async def execute(command: str) -> Dict[str, Any]:
             'output': stdout.decode('utf-8', 'ignore').strip(),
             'error': stderr.decode('utf-8', 'ignore').strip()
         }
-
-
-async def show_error(msg: Message, e: Any) -> None:
-    await msg.edit_text(f"⚠️ Error\n```{e}```")
 
 
 async def kick_one(cli: Client, cid: Union[int, str], uid: Union[int, str]):

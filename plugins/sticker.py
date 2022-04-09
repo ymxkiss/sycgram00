@@ -6,7 +6,8 @@ from loguru import logger
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from tools.constants import STICKER_BOT, STICKER_ERROR_LIST
-from tools.helpers import Parameters, check_if_package_existed, get_default_pkg
+from tools.helpers import (Parameters, check_if_package_existed,
+                           get_default_pkg, show_exception)
 from tools.stickers import StickerAdder, sticker_cond, sticker_locker
 from tools.storage import SimpleStore
 
@@ -40,7 +41,7 @@ async def sticker(cli: Client, msg: Message):
         # 处理参数
         if len(args) != 2:
             pkg_title, pkg_name = get_default_pkg(msg.from_user)
-            await msg.edit('✅ Reset sticker title and name to default..')
+            await msg.edit_text('✅ Reset sticker title and name to default..')
         else:
             pkg_title, pkg_name = args
             if len(pkg_title.encode()) >= 168:
@@ -49,22 +50,21 @@ async def sticker(cli: Client, msg: Message):
             elif len(pkg_title.encode()) >= 58:
                 await msg.edit_text('❗️ Too long sticker set name.')
                 return
-            await msg.edit('✅ Customize sticker title and name successfully.')
+            await msg.edit_text('✅ Customize sticker title and name successfully.')
 
         async with SimpleStore() as store:
             store.data['sticker_set_title'] = pkg_title
             store.data['sticker_set_name'] = pkg_name
         return
 
-    async with SimpleStore() as store:
+    async with SimpleStore(auto_flush=False) as store:
         pkg_title = store.data.get('sticker_set_title')
         pkg_name = store.data.get('sticker_set_name')
         if not pkg_title or not pkg_name:
-            await msg.edit_text(
+            return await msg.edit_text(
                 "⚠️ The default sticker title and name are empty, "
                 "please use `-s` reset!"
             )
-            return
 
     # 尝试检查贴纸包是否存在
     try:
@@ -72,8 +72,7 @@ async def sticker(cli: Client, msg: Message):
     except Exception as e:
         # 无法判定是否贴纸包存在
         logger.error(e)
-        await msg.edit_text('⚠️ Network Error | Please try again later ...')
-        return
+        return await show_exception(msg, e)
 
     # 开始前的检查
     await msg.edit_text('👆 Working on adding stickers ...')

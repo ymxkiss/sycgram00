@@ -9,7 +9,7 @@ from pyrogram import Client
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message
 from tools.constants import CC_MAX_TIMES, REACTIONS, STORE_CC_DATA, TG_GROUPS
-from tools.helpers import Parameters, delete_this, emoji_sender, get_cmd_error
+from tools.helpers import Parameters, delete_this, emoji_sender, show_cmd_tip
 from tools.storage import SimpleStore
 
 
@@ -40,8 +40,7 @@ async def cc(cli: Client, msg: Message):
             await msg.edit_text(f"Default emoji changed to `{tmp}`")
             return
         else:
-            await msg.edit_text(get_cmd_error(cmd))
-            return
+            return await show_cmd_tip(msg, cmd)
 
     # 攻击次数
     cc_times = cc_times if 1 <= cc_times <= CC_MAX_TIMES else CC_MAX_TIMES

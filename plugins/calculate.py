@@ -4,7 +4,7 @@ from core import command
 from pyrogram import Client
 from pyrogram.errors import FloodWait, RPCError
 from pyrogram.types import Message
-from tools.helpers import Parameters, basher
+from tools.helpers import Parameters, basher, show_exception
 
 
 @Client.on_message(command("cal"))
@@ -14,8 +14,7 @@ async def calculate(_: Client, msg: Message):
     try:
         res = await basher(f"""echo "scale=4;{args}" | bc""", 3)
     except asyncio.exceptions.TimeoutError:
-        await msg.edit_text("❗️ Connection Timeout")
-        return
+        return await show_exception(msg, "Connection Timeout！")
     if not res.get('output'):
         await msg.edit_text(f"Error：{res.get('error')}")
         return
