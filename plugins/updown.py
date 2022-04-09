@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime
 import os
 
@@ -6,7 +7,7 @@ from loguru import logger
 from pyrogram import Client
 from pyrogram.types import Message
 from tools.constants import DOWNLOAD_PATH
-from tools.helpers import Parameters, show_cmd_tip, show_exception
+from tools.helpers import Parameters, delete_this, show_cmd_tip, show_exception
 
 
 @Client.on_message(command("upload"))
@@ -19,7 +20,7 @@ async def upload(cli: Client, msg: Message):
         if msg.reply_to_message else None
     _, filename = os.path.split(where)
     try:
-        await cli.send_document(
+        res = await cli.send_document(
             chat_id=msg.chat.id,
             document=where,
             file_name=filename,
@@ -27,6 +28,11 @@ async def upload(cli: Client, msg: Message):
         )
     except Exception as e:
         return await show_exception(msg, e)
+    else:
+        if res:
+            await delete_this(msg)
+        else:
+            await msg.edit_text("⚠️ Maybe fail to upload ...")
 
 
 @Client.on_message(command("download"))
@@ -42,9 +48,16 @@ async def download(_: Client, msg: Message):
     else:
         file_name = DOWNLOAD_PATH if not where else where
     try:
-        await replied_msg.download(file_name=file_name)
+        res = await replied_msg.download(file_name=file_name)
     except ValueError:
         return await show_cmd_tip(msg, cmd)
     except Exception as e:
         logger.error(e)
         return await show_exception(msg, e)
+    else:
+        if res:
+            await msg.edit_text("✅ Download this successfully.")
+            await asyncio.sleep(3)
+            await delete_this(msg)
+        else:
+            await msg.edit_text("⚠️ Maybe fail to download ...")
