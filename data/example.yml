@@ -135,12 +135,12 @@ restart:
 update:
   cmd: update
   format: -update
-  usage: 更新sycgram到主分支的最新版本
+  usage: 更新配置文件和sycgram到主分支的最新版本
 
 prefix:
   cmd: prefix
-  format: -prefix <symbol>
-  usage: 修改所有指令的前缀符号
+  format: -prefix <符号|reset>
+  usage: 修改所有指令的前缀。当参数为reset时，恢复command.yml的所有默认参数
 
 alias:
   cmd: alias
@@ -156,3 +156,8 @@ download:
   cmd: download
   format: -download <无|文件路径>
   usage: 回复一条文件/视频/图片/音乐等可下载的消息。如无指定文件路径，则默认存放至容器默认挂载的目录
+
+ip:
+  cmd: ip
+  format: -ip <IP地址|域名>
+  usage: 查询IP地址或域名的信息
