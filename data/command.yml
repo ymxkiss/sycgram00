@@ -139,7 +139,7 @@ update:
 
 prefix:
   cmd: prefix
-  format: -prefix <symbol>
+  format: -prefix <符号>
   usage: 修改所有指令的前缀符号
 
 alias:
@@ -154,5 +154,5 @@ upload:
 
 download:
   cmd: download
-  format: -download
-  usage: 回复一条文件/视频/图片/音乐等可下载的消息，存放至容器默认挂载的目录
+  format: -download <无|文件路径>
+  usage: 回复一条文件/视频/图片/音乐等可下载的消息。如无指定文件路径，则默认存放至容器默认挂载目录
