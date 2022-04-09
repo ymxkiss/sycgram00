@@ -6,7 +6,7 @@ from core import command
 from loguru import logger
 from pyrogram import Client
 from pyrogram.types import Message
-from tools.constants import DOWNLOAD_PATH
+from tools.constants import DOWNLOAD_PATH, SYCGRAM
 from tools.helpers import Parameters, delete_this, show_cmd_tip, show_exception
 
 
@@ -23,6 +23,7 @@ async def upload(cli: Client, msg: Message):
         res = await cli.send_document(
             chat_id=msg.chat.id,
             document=where,
+            caption=f"```From {SYCGRAM}```",
             file_name=filename,
             reply_to_message_id=replied_msg_id
         )
