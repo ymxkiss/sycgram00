@@ -11,5 +11,5 @@ async def dc(_: Client, msg: Message):
     dc_id = msg.reply_to_message.from_user.dc_id \
         if _is_replied else msg.chat.dc_id
     name = msg.reply_to_message.from_user.mention(style="md") \
-        if _is_replied else f"`{msg.chat.title}`"
+        if _is_replied else f"`{msg.chat.title or msg.chat.first_name}`"
     await msg.edit_text(get_dc_text(name, dc_id))
