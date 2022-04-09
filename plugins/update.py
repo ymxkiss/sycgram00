@@ -1,13 +1,12 @@
 import asyncio
-import shutil
 import sys
 
 from core import command
 from loguru import logger
 from pyrogram import Client
 from pyrogram.types import Message
-from tools.constants import (COMMAND_YML, EXAMPLE_YML, SYCGRAM, SYCGRAM_ERROR,
-                             SYCGRAM_INFO, SYCGRAM_WARNING, UPDATE_CMD)
+from tools.constants import (SYCGRAM, SYCGRAM_ERROR, SYCGRAM_INFO,
+                             SYCGRAM_WARNING, UPDATE_CMD)
 from tools.helpers import Parameters, basher, show_cmd_tip, show_exception
 from tools.updates import (get_alias_of_cmds, pull_and_update_command_yml,
                            reset_cmd_alias, update_cmd_alias,
@@ -47,13 +46,11 @@ async def prefix(_: Client, msg: Message):
     punctuation = list("""!#$%&*+,-./:;=?@^~！？。，；·\\""")
     if pfx == "reset":
         try:
-            _ = shutil.copy(EXAMPLE_YML, COMMAND_YML)
-        except shutil.SameFileError:
-            return await msg.edit_text("😂 No need to reset")
+            await pull_and_update_command_yml(is_update=False)
         except Exception as e:
             return await show_exception(msg, e)
         else:
-            await msg.edit_text("✅ Reset command.yml")
+            await msg.edit_text("✅ Restore command.yml to default.")
             sys.exit()
 
     elif len(pfx) == 0 or len(pfx) > 1 or pfx not in punctuation:
