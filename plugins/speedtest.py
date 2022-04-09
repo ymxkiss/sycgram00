@@ -19,7 +19,7 @@ async def speedtest(_: Client, msg: Message):
     async with Speedtester() as tester:
         if opt == 'update':
             try:
-                update_res = await tester.init_for_speedtest('update')
+                update_res = await tester.install_speedtest_cli('update')
             except asyncio.exceptions.TimeoutError:
                 await show_exception(msg, "Update Timeout！")
             except Exception as e:
@@ -50,7 +50,7 @@ async def speedtest(_: Client, msg: Message):
             return await show_cmd_tip(msg, cmd)
 
     if not link:
-        return await show_exception(msg, "Speedtest Connection Error")
+        return await msg.edit_text(text)
 
     # send speed report
     try:

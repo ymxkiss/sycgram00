@@ -8,7 +8,7 @@ from typing import Any, Dict, Optional, Tuple
 
 from loguru import logger
 
-from tools.constants import INSTALL_SPEEDTEST, SPEEDTEST_PATH_FILE
+from tools.constants import INSTALL_SPEEDTEST, SPEEDTEST_PATH_FILE, SYCGRAM_ERROR
 
 from .helpers import basher
 
@@ -31,12 +31,11 @@ class Speedtester:
 
         Args:
             cmd (str, optional): speedtest的完整指令，需要返回json格式.
-            Defaults to 'speedtest-cli --share --json'.
 
         Returns:
             Tuple[str]: 第一个值是文本/错误，第二个是图片link
         """
-        await self.init_for_speedtest()
+        await self.install_speedtest_cli()
         # 超时报错
         res = await basher(cmd, timeout=60)
         logger.info(f"Speedtest Execution | {res}")
@@ -45,8 +44,9 @@ class Speedtester:
             # output result
             self.__output: Dict[str, Any] = json.loads(res.get('output'))
             self.__server: Dict[str, Any] = self.__output.get('server')
-        except Exception:
-            return f"⚠️ Error\n```{res.get('error')}```", ''
+        except Exception as e:
+            logger.error(e)
+            return f"⚠️ Speedtest Error\n```{res.get('error')}```", ''
         else:
             text = "**Speedtest**\n" \
                 f"Server: {self.get_server()}\n" \
@@ -59,21 +59,21 @@ class Speedtester:
             return text, f"{self.__output.get('result').get('url')}.png"
 
     async def list_servers_ids(self, cmd: str) -> str:
-        await self.init_for_speedtest()
+        await self.install_speedtest_cli()
         res = await basher(cmd, timeout=10)
         logger.info(f"Speedtest Execution | {res}")
         if not res.get('error'):
             try:
                 self.__output: Dict[str, Any] = json.loads(res.get('output'))
-            except (TypeError, AttributeError, json.decoder.JSONDecodeError):
-                return "⚠️ Unable to get ids of servers"
+            except Exception:
+                return "**{SYCGRAM_ERROR}**\n> # `⚠️ Unable to get ids of servers`"
             else:
                 tmp = '\n'.join(
                     f"`{k.get('id')}` **|** {k.get('name')} **|** {k.get('location')} {k.get('country')}"
                     for k in self.__output.get('servers')
                 )
                 return f"**Speedtest节点列表：**\n{tmp}"
-        return f"⚠️ Error\n```{res.get('error')}```"
+        return f"**{SYCGRAM_ERROR}**\n```{res.get('error')}```"
 
     def get_server(self) -> str:
         location = self.__server.get('location')
@@ -114,14 +114,14 @@ class Speedtester:
     def get_time(self) -> str:
         return f"`{datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')}`"
 
-    async def init_for_speedtest(self, opt: str = 'install') -> Optional[str]:
+    async def install_speedtest_cli(self, opt: str = 'install') -> Optional[str]:
         def exists_file() -> bool:
             return path.exists(SPEEDTEST_PATH_FILE)
 
         if platform.uname().system != "Linux" or platform.uname().machine not in [
             'i386', 'x86_64', 'armel', 'armhf', 'aarch64',
         ]:
-            text = f"Unsupported System >>> {platform.uname().system} - {platform.uname().machine}"
+            text = f"Unsupported System >>> {platform.uname().system} {platform.uname().machine}"
             logger.warning(text)
             return text
         elif opt == 'install':
@@ -134,10 +134,10 @@ class Speedtester:
                 os.remove(SPEEDTEST_PATH_FILE)
             await self.__download_file()
             if exists_file():
-                text = "✅ Update speedtest successfully."
+                text = "Update speedtest successfully."
                 logger.success(text)
                 return text
-            return "❌ Failed to update speedtest！"
+            return "Failed to update speedtest！"
         else:
             raise ValueError(f'Wrong speedtest option {opt}！')
 

@@ -6,7 +6,7 @@ from pyrogram import Client
 from pyrogram.errors import BadRequest, FloodWait
 from pyrogram.types import Message
 from tools.constants import STORE_NOTES_DATA
-from tools.helpers import Parameters, get_cmd_error
+from tools.helpers import Parameters, show_cmd_tip
 from tools.storage import SimpleStore
 
 
@@ -19,8 +19,7 @@ async def note(_: Client, msg: Message):
     """
     cmd, opts = Parameters.get_more(msg)
     if not (1 <= len(opts) <= 2):
-        await msg.edit_text(get_cmd_error(cmd))
-        return
+        return await show_cmd_tip(msg, cmd)
 
     replied_msg = msg.reply_to_message
     async with SimpleStore() as store:
@@ -30,7 +29,7 @@ async def note(_: Client, msg: Message):
                 notes_data[opts[1]] = replied_msg.text or replied_msg.caption
                 text = "😊 Notes saved successfully."
             else:
-                text = get_cmd_error(cmd)
+                return await show_cmd_tip(msg, cmd)
         elif len(opts) == 2 and opts[0] == 'del':
             if notes_data.pop(opts[1], None):
                 text = "😊 Notes deleted successfully."
@@ -49,7 +48,7 @@ async def note(_: Client, msg: Message):
                 res = notes_data.get(option)
                 text = res if res else f"😱 No saved notes found for {option}"
         else:
-            text = get_cmd_error(cmd)
+            return await show_cmd_tip(msg, cmd)
 
     try:
         await msg.edit_text(text)

@@ -7,7 +7,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 from tools.constants import (SYCGRAM, SYCGRAM_ERROR, SYCGRAM_INFO,
                              SYCGRAM_WARNING, UPDATE_CMD)
-from tools.helpers import Parameters, basher, get_cmd_error
+from tools.helpers import Parameters, basher, show_cmd_tip
 from tools.updates import (get_alias_of_cmds, pull_and_update_command_yml,
                            reset_cmd_alias, update_cmd_alias,
                            update_cmd_prefix)
@@ -96,7 +96,9 @@ async def alias(_: Client, msg: Message):
 
     elif len(args) == 1 and args[0] == 'list':
         try:
-            text = get_alias_of_cmds()
+            data = get_alias_of_cmds()
+            tmp = ''.join(f"`{k}` | `{v}`\n" for k, v in data.items())
+            text = f"**⭐️ 指令别名：**\n**源名** | **别名**\n{tmp}"
         except Exception as e:
             text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
             logger.error(e)
@@ -105,4 +107,4 @@ async def alias(_: Client, msg: Message):
             await msg.edit_text(text, parse_mode='md')
 
     else:
-        await msg.edit_text(get_cmd_error(cmd))
+        await show_cmd_tip(msg, cmd)
