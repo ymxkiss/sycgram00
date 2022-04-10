@@ -8,6 +8,10 @@ bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/instal
 ```
 
 
+## 指令说明
+
+- 使用`-help`查看指令列表
+
 
 ## 迁移备份
 
@@ -19,7 +23,7 @@ bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/instal
 
 ## 自定义指令前缀及指令别名
 
-- 每次通过脚本更新【建议使用指令更新】都会覆盖本地的`command.yml`，原文件会备份到`command目录`
+- 每次通过脚本更新都会覆盖本地的`command.yml`，原文件会备份到`command目录`。指令更新，则会本地的`command.yml`不会被覆盖
 - 可以通过指令修改前缀和别名
 - 指令别名只支持单别名和源名（不再支持多别名）
 

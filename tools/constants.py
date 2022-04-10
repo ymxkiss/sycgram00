@@ -7,14 +7,14 @@ SYCGRAM_ERROR: str = f"{SYCGRAM.title()} | ERROR"
 SYCGRAM_WARNING: str = f"{SYCGRAM.title()} | WARNING"
 COMMAND_YML: str = './data/command.yml'
 CMD_YML_REMOTE: str = "https://raw.githubusercontent.com/iwumingz/sycgram/main/data/command.yml"
-UPDATE_CMD: str = f"""
-docker run --rm \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    containrrr/watchtower \
-    --cleanup \
-    --run-once \
-    {SYCGRAM}
-"""
+UPDATE_CMD: str = "docker run --rm " \
+    "-v /var/run/docker.sock:/var/run/docker.sock " \
+    "containrrr/watchtower " \
+    "--trace " \
+    "--cleanup " \
+    "--run-once " \
+    f"{SYCGRAM}"
+
 
 # ------------- Load --------------
 DOWNLOAD_PATH: str = './data/download/'
@@ -29,7 +29,7 @@ HTTP_HEADERS: Dict[str, str] = {
 # ------------- speedtest --------------
 SPEEDTEST_PATH_FILE: str = './data/speedtest'
 SPEEDTEST_INSTALL_URL: str = "https://install.speedtest.net/app/cli/ookla-speedtest-1.1.1-linux-$(uname -m).tgz"
-INSTALL_SPEEDTEST: str = f"""wget -qO- "{SPEEDTEST_INSTALL_URL}" | tar zx -C ./data speedtest"""
+INSTALL_SPEEDTEST: str = f"""wget - qO - "{SPEEDTEST_INSTALL_URL}" | tar zx - C ./data speedtest"""
 SPEEDTEST_RUN: str = f'{SPEEDTEST_PATH_FILE} --accept-license --accept-gdpr -f json'
 
 # ------------- sticker --------------

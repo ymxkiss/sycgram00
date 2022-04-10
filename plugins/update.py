@@ -1,5 +1,6 @@
 import asyncio
 import sys
+from subprocess import PIPE, Popen
 
 from core import command
 from loguru import logger
@@ -7,7 +8,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 from tools.constants import (SYCGRAM, SYCGRAM_ERROR, SYCGRAM_INFO,
                              SYCGRAM_WARNING, UPDATE_CMD)
-from tools.helpers import Parameters, basher, show_cmd_tip, show_exception
+from tools.helpers import Parameters, show_cmd_tip, show_exception
 from tools.updates import (get_alias_of_cmds, pull_and_update_command_yml,
                            reset_cmd_alias, update_cmd_alias,
                            update_cmd_prefix)
@@ -28,7 +29,8 @@ async def update(_: Client, msg: Message):
     await msg.edit_text(text, parse_mode='md')
     try:
         await pull_and_update_command_yml()
-        _ = await basher(UPDATE_CMD, timeout=60)
+        p = Popen(UPDATE_CMD, stdout=PIPE, shell=True)
+        p.communicate()
     except asyncio.exceptions.TimeoutError:
         text = f"**{SYCGRAM_WARNING}**\n> # `Update Timeout！`"
     except Exception as e:

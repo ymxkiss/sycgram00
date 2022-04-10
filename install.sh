@@ -144,7 +144,7 @@ install_sycgram(){
     --hostname ${CONTAINER_NAME} \
     -v ${PROJECT_PATH}/data:/sycgram/data \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /usr/bin/docker:/usr/local/bin/docker \
+    -v /usr/bin/docker:/usr/bin/docker \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
