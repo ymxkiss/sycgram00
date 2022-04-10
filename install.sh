@@ -5,7 +5,7 @@ CONTAINER_NAME="sycgram"
 GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
 PROJECT_PATH="/opt/${CONTAINER_NAME}"
-PROJECT_VERSION="v1.1.4"
+PROJECT_VERSION="v1.1.5"
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -134,6 +134,7 @@ install_sycgram(){
     echo -e "${yellow}正在拉取镜像...${plain}"
     docker pull ${GITHUB_IMAGE_PATH}:latest
 
+    # 容器时区与宿主机同步，请自行修改宿主机时区
     # 注意这里是docker的一些默认路径
     # 如果你有过路径更改，请按需修改即可
     echo -e "${yellow}正在启动容器...${plain}"
