@@ -8,8 +8,7 @@ from typing import Any, Dict, Optional, Tuple
 
 from loguru import logger
 
-from tools.constants import INSTALL_SPEEDTEST, SPEEDTEST_PATH_FILE, SYCGRAM_ERROR
-
+from .constants import INSTALL_SPEEDTEST, SPEEDTEST_PATH_FILE, SYCGRAM_ERROR
 from .helpers import basher
 
 
@@ -53,7 +52,7 @@ class Speedtester:
                 f"Sponsor: {self.get_sponsor()}\n" \
                 f"Upload: {self.get_speed('upload')}\n" \
                 f"Download: {self.get_speed('download')}\n" \
-                f"jitter: {self.get_ping('jitter')}\n" \
+                f"Jitter: {self.get_ping('jitter')}\n" \
                 f"Latency: {self.get_ping('latency')}\n" \
                 f"Time: {self.get_time()}"
             return text, f"{self.__output.get('result').get('url')}.png"

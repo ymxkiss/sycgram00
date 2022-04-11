@@ -134,7 +134,7 @@ restart:
 
 update:
   cmd: update
-  format: -update
+  format: -update <无|force>
   usage: 更新配置文件和sycgram到主分支的最新版本
 
 prefix:
@@ -159,5 +159,5 @@ download:
 
 ip:
   cmd: ip
-  format: -ip <IP地址|域名>
+  format: -ip <IP地址|域名|me>
   usage: 查询IP地址或域名的信息

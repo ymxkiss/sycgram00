@@ -1,9 +1,12 @@
+import json
 import re
 from typing import Any, Dict
 
 import yaml
+from loguru import logger
 
-from .constants import CMD_YML_REMOTE, COMMAND_YML
+from .constants import CMD_YML_REMOTE, COMMAND_YML, SYCGRAM
+from .helpers import basher
 from .sessions import session
 
 
@@ -89,3 +92,36 @@ async def pull_and_update_command_yml(is_update: bool = True) -> None:
             # 合并到本地，以本地为主
             update_cmd_yml(data)
         resp.raise_for_status()
+
+
+async def get_remote_version() -> str:
+    """获取远程仓库版本"""
+    api = "https://api.github.com/repos/iwumingz/sycgram/tags"
+    async with session.get(api, timeout=9.9) as resp:
+        if resp.status == 200:
+            res = await resp.json()
+            return res[0].get('name')
+        resp.raise_for_status()
+
+
+async def get_local_version() -> str:
+    """获取本地仓库版本"""
+    cmd = f"docker inspect ghcr.io/iwumingz/{SYCGRAM}:latest -f '{{json .Config.Labels}}'"
+    res = await basher(cmd, timeout=10)
+    if not res.get('error'):
+        try:
+            data = json.loads(res.get('output'))
+        except Exception as e:
+            raise e
+        else:
+            return data.get('org.opencontainers.image.version')
+    raise ValueError(res.get('error'))
+
+
+async def is_latest_version() -> bool:
+    """检测是否为最新版本镜像"""
+    remote_v = await get_remote_version()
+    local_v = await get_local_version()
+    logger.info(f"Remote image version is {remote_v}")
+    logger.info(f"Local image version is {local_v}")
+    return remote_v == local_v

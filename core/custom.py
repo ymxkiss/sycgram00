@@ -4,7 +4,7 @@
 @File    :   custom.py
 @Time    :   2022/04/02 10:17:03
 @Author  :   Viperorz
-@Version :   1.0.5
+@Version :   v1.1.7
 @License :   (C)Copyright 2021-2022
 @Desc    :   None
 """
