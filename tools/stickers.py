@@ -94,14 +94,13 @@ class StickerAdder:
             await self.__wait_for()
 
     async def send_emoji(self) -> None:
-        if self._msg.reply_to_message.sticker:
+        _, arg = Parameters.get(self._msg)
+        if emoji.is_emoji(arg):
+            an_emoji = arg
+        elif self._msg.reply_to_message.sticker:
             an_emoji = self._msg.reply_to_message.sticker.emoji
         else:
-            _, arg = Parameters.get(self._msg)
-            if emoji.is_emoji(arg):
-                an_emoji = arg
-            else:
-                an_emoji = '⚡️'
+            an_emoji = '⚡️'
         await self.send_message(an_emoji)
 
     async def send_retries(self, n: int) -> None:
