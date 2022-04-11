@@ -63,7 +63,7 @@ async def sticker(cli: Client, msg: Message):
         if not pkg_title or not pkg_name:
             return await msg.edit_text(
                 "⚠️ The default sticker title and name are empty, "
-                "please use `-s` reset!"
+                "please use `-s reset`!"
             )
 
     # 尝试检查贴纸包是否存在
