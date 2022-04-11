@@ -6,7 +6,7 @@ from loguru import logger
 from pyrogram import Client
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message
-from tools.googles import google_search
+from tools.poster import google_search
 from tools.helpers import Parameters, show_cmd_tip, show_exception
 
 

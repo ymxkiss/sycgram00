@@ -161,3 +161,8 @@ ip:
   cmd: ip
   format: -ip <IP地址|域名|me>
   usage: 查询IP地址或域名的信息
+
+ipcheck:
+  cmd: ipcheck
+  format: -ipcheck <IP|域名> <端口|无>
+  usage: 无端口参数时，查询IP或域名是否被阻断；有则查询端口是否开启
