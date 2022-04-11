@@ -2,7 +2,7 @@
 
 ## 配置
 
-- 需要两个参数：api_id、api_hash
+- 需要两个参数：`api_id`、`api_hash`
 - 如果没有，点击这个[电报链接](https://my.telegram.org/apps)申请
 
 
@@ -26,14 +26,12 @@ bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/instal
 3. 在新环境运行sycgram管理脚本
 
 
-
 ## 自定义指令前缀及指令别名
 
 - 脚本更新：都会覆盖本地的`command.yml`，原文件会备份到`command目录`。
 - 指令更新：本地的`command.yml`不会被覆盖
 - 可以通过指令修改前缀和别名
 - 指令别名只支持单别名和源名（不再支持多别名）
-
 
 
 ## 注意事项
