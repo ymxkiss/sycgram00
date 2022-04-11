@@ -33,7 +33,8 @@ INSTALL_SPEEDTEST: str = f"""wget -qO- "{SPEEDTEST_URL}" | tar zx -C ./data spee
 SPEEDTEST_RUN: str = f'{SPEEDTEST_PATH_FILE} --accept-license --accept-gdpr -f json'
 
 # ------------- sticker --------------
-STICKER_BOT: int = 429000
+# STICKER_BOT: int = 429000
+STICKER_BOT: str = "@Stickers"
 STICKER_IMG: str = './data/img/tmp.png'
 STICKER_DESCRIP: str = b'A Telegram user has created the Sticker\xc2\xa0Set.'.decode(
     'utf-8')
