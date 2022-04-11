@@ -17,8 +17,7 @@ bash <(curl -fsL "https://raw.githubusercontent.com/iwumingz/sycgram/main/instal
 
 > 指令更新是通过拉取一次`watchower`来更新。
 
-存在的问题：有一定的概率拉取最新镜像后移除容器后没法再次创建容器，sycgram就会失联。
-解决方法：指令更新方法改为在容器内部git pull代码然后重启容器。这种方法比较稳妥，但目前本人只想开摆。
+watchower存在的问题：有一定的概率拉取最新镜像后移除容器后没法再次创建容器，sycgram就会失联。
 
 
 ## 指令说明
