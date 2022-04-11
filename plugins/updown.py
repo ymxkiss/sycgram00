@@ -11,7 +11,7 @@ from tools.helpers import Parameters, delete_this, show_cmd_tip, show_exception
 
 @Client.on_message(command("upload"))
 async def upload(cli: Client, msg: Message):
-    """上传容器内的文件"""
+    """上传文件"""
     cmd, where = Parameters.get(msg)
     if not where:
         return await show_cmd_tip(msg, cmd)
@@ -37,7 +37,7 @@ async def upload(cli: Client, msg: Message):
 
 @Client.on_message(command("download"))
 async def download(_: Client, msg: Message):
-    """下载目标消息的文件到挂载目录"""
+    """下载目标消息的文件"""
     cmd, where = Parameters.get(msg)
     replied_msg = msg.reply_to_message
     if not replied_msg:

@@ -16,7 +16,7 @@ from tools.updates import (get_alias_of_cmds, is_latest_version,
 
 @Client.on_message(command("restart"))
 async def restart(_: Client, msg: Message):
-    """重启容器"""
+    """重启"""
     text = f"**{SYCGRAM_INFO}**\n> # `Restarting {SYCGRAM} ...`"
     await msg.edit_text(text=text, parse_mode='md')
     sys.exit()
