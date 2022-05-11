@@ -165,3 +165,8 @@ ipcheck:
   cmd: ipcheck
   format: -ipcheck <IP|域名> <端口|无>
   usage: 无端口参数时，查询IP或域名是否被阻断；有则查询端口是否开启
+  
+bc:
+  cmd: bc
+  format: -bc num from to
+  usage: 加密货币转换
