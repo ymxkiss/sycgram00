@@ -71,6 +71,23 @@ async def mtts(cli: Client, msg: Message):
                                                     model.Gender,
                                                     model.LocaleName)
         await msg.edit_text(s)
+    elif opt is not None and opt != " " and opt != '':
+        config = await config_check()
+        mp3_buffer = await cmtts.mtts(text=opt,
+                                      short_name=config["short_name"],
+                                      style=config["style"],
+                                      rate=config["rate"],
+                                      pitch=config['pitch'],
+                                      kmhz=config["kmhz"])
+        mp3_path = await save_audio(mp3_buffer)
+
+        if replied_msg is None:
+            await msg.reply_voice(mp3_path)
+            await delete_this(msg)
+        else:
+            await msg.reply_voice(
+                mp3_path, reply_to_message_id=replied_msg["message_id"])
+            await delete_this(msg)
     elif replied_msg is not None:
         config = await config_check()
         mp3_buffer = await cmtts.mtts(text=replied_msg["text"],
@@ -83,17 +100,9 @@ async def mtts(cli: Client, msg: Message):
         await msg.reply_voice(mp3_path,
                               reply_to_message_id=replied_msg["message_id"])
         await delete_this(msg)
-    elif opt is not None or opt != "":
-        config = await config_check()
-        mp3_buffer = await cmtts.mtts(text=opt,
-                                      short_name=config["short_name"],
-                                      style=config["style"],
-                                      rate=config["rate"],
-                                      pitch=config['pitch'],
-                                      kmhz=config["kmhz"])
-        mp3_path = await save_audio(mp3_buffer)
-        await msg.reply_voice(mp3_path)
-        await delete_this(msg)
+    elif opt is None or opt == " ":
+        await msg.edit_text("error, please use help command to show use case")
+
 
 '''
 in commmand.yml
@@ -102,3 +111,4 @@ mtts:
   format: -mtts text
   usage: tts AI 语音转换,-mtts list zh 模糊搜索列出含有zh字符的语音模型, -mtts set zh-CN-YunfengNeural 使用zh-CN-YunfengNeural语音模型
 '''
+
