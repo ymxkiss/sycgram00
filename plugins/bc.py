@@ -71,7 +71,7 @@ async def coin(_: Client, msg: Message):
                 else:
                     to_usdt=await get_from_biance(_to)
                     result=num*from_usdt/to_usdt
-        currency = f"```{num} {_from} = {result:.8f} {_to} = {cny} CNY \n\r实时汇率来自于biance```"
+        currency = f"```{num} {_from} = {result:.8f} {_to} = {cny} CNY \n\r实时汇率来自于binance```"
         await msg.edit_text(currency)
     except Exception as e:
         logger.error(e)

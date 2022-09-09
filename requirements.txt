@@ -21,4 +21,4 @@ soupsieve==2.3.1
 TgCrypto==1.2.3
 win32-setctime==1.1.0
 yarl==1.7.2
-pymtts==0.1.7
+pymtts==0.1.8
