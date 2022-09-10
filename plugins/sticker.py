@@ -10,7 +10,7 @@ from tools.helpers import (Parameters, check_if_package_existed,
                            get_default_pkg, show_exception)
 from tools.stickers import StickerAdder, sticker_cond, sticker_locker
 from tools.storage import SimpleStore
-
+from pyrogram.enums import ParseMode 
 
 @Client.on_message(filters.incoming & filters.user(STICKER_BOT), group=-1)
 async def sticker_event(cli: Client, msg: Message):
@@ -144,7 +144,7 @@ async def sticker_helper(
 
         if adder.is_finished(pkg_existed):
             success = success.replace('<time>', f'{time()-start:.3f}', 1)
-            await adder.done(success, parse_mode='md')
+            await adder.done(success, parse_mode=ParseMode.MARKDOWN)
             return
         else:
             adder.send_retries(attempts)

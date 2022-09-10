@@ -9,7 +9,7 @@ from pyrogram.types import Message
 from tools.constants import REACTIONS, STORE_TRACE_DATA
 from tools.helpers import Parameters, delete_this
 from tools.storage import SimpleStore
-
+from pyrogram.enums import ParseMode 
 
 @Client.on_message(is_traced(), group=-4)
 async def trace_event(cli: Client, msg: Message):
@@ -80,11 +80,11 @@ async def trace(cli: Client, msg: Message):
             text = f"📢 trace名单：\n{tmp}"
 
     try:
-        await msg.edit_text(text, parse_mode='md')
+        await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
 
     except FloodWait as e:
         await asyncio.sleep(e.x)
-        await msg.edit_text(text, parse_mode='md')
+        await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
 
     except RPCError as e:
         logger.error(e)

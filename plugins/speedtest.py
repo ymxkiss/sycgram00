@@ -8,7 +8,7 @@ from pyrogram.types import Message
 from tools.constants import SPEEDTEST_RUN, SYCGRAM_INFO
 from tools.helpers import Parameters, delete_this, show_cmd_tip, show_exception
 from tools.speedtests import Speedtester
-
+from pyrogram.enums import ParseMode 
 
 @Client.on_message(command('speedtest'))
 async def speedtest(_: Client, msg: Message):
@@ -27,13 +27,13 @@ async def speedtest(_: Client, msg: Message):
             else:
                 await msg.edit_text(
                     f"**{SYCGRAM_INFO}**\n> # `{update_res}`",
-                    parse_mode='md'
+                    parse_mode=ParseMode.MARKDOWN
                 )
             return
         elif opt == 'list':
             try:
                 text = await tester.list_servers_ids(f"{SPEEDTEST_RUN} -L")
-                await msg.edit_text(text, parse_mode='md')
+                await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
             except asyncio.exceptions.TimeoutError:
                 await show_exception(msg, "Speedtest Timeout")
             except Exception as e:
@@ -54,10 +54,10 @@ async def speedtest(_: Client, msg: Message):
 
     # send speed report
     try:
-        await msg.reply_photo(photo=link, caption=text, parse_mode='md')
+        await msg.reply_photo(photo=link, caption=text, parse_mode=ParseMode.MARKDOWN)
     except FloodWait as e:
         await asyncio.sleep(e.x)
-        await msg.reply_photo(photo=link, caption=text, parse_mode='md')
+        await msg.reply_photo(photo=link, caption=text, parse_mode=ParseMode.MARKDOWN)
     except Exception as e:
         await show_exception(msg, e)
     # delete cmd history

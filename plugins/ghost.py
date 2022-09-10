@@ -10,6 +10,7 @@ from tools.ghosts import get_ghost_to_read
 from tools.helpers import (Parameters, delete_this, get_fullname,
                            get_sender_name)
 from tools.storage import SimpleStore
+from pyrogram.enums import ParseMode 
 
 
 @Client.on_message(filters.incoming, group=-2)
@@ -55,7 +56,7 @@ async def ghost(_: Client, msg: Message):
                 ghost_data[chat.id] = chat.title or get_fullname(msg.from_user)
             store.flush()
 
-    await msg.edit_text(text, parse_mode='md')
+    await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
     await asyncio.sleep(1)
     if opt != 'status' and opt != 'list':
         await delete_this(msg)

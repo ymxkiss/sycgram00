@@ -1,7 +1,7 @@
 import asyncio
 import re
 from typing import Any, Dict, List, Tuple, Union
-
+import os 
 from bs4 import BeautifulSoup
 from core.custom import CMDS_PREFIX
 from loguru import logger
@@ -11,8 +11,8 @@ from pyrogram.types import Message, User
 
 from .constants import STICKER_DESCRIP, SYCGRAM_ERROR, SYCGRAM_INFO
 from .sessions import session
-
-
+from pyrogram.enums import ParseMode 
+from configparser import ConfigParser
 class Parameters:
     @classmethod
     def get(cls, msg: Message) -> Tuple[str]:
@@ -95,13 +95,13 @@ def is_deleted_id(msg: Message) -> bool:
 
 async def show_exception(msg: Message, e: Any) -> None:
     text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
-    await msg.edit_text(text, parse_mode='md')
+    await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
 async def show_cmd_tip(msg: Message, cmd: str) -> str:
     tip = f"Use `{CMDS_PREFIX}help {cmd.replace(CMDS_PREFIX, '', 1)}` to view detailed usage."
     text = f"**{SYCGRAM_INFO}**\n> # {tip}"
-    await msg.edit_text(text, parse_mode='md')
+    await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
 async def check_if_package_existed(pkg_name: str) -> bool:
@@ -208,3 +208,21 @@ def escape_markdown(text: str, version: int = 1, entity_type: str = None) -> str
         raise ValueError('Markdown version must be either 1 or 2!')
 
     return re.sub(f'([{re.escape(escape_chars)}])', r'\\\1', text)
+
+
+class BotConfigParser:
+    def __init__(self, config_path: str = os.path.join(os.getcwd(), "data/config.ini")):
+        self._config_path = config_path
+        self.config = ConfigParser()
+
+
+    def config_read(self):
+        try:
+            self.config.read(self._config_path, encoding="utf-8")
+        except Exception as e:
+            logger.error(e)
+            return None
+
+    def get_config(self):
+        self.config_read()
+        return self.config

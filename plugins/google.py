@@ -8,7 +8,7 @@ from pyrogram.errors import FloodWait
 from pyrogram.types import Message
 from tools.poster import google_search
 from tools.helpers import Parameters, show_cmd_tip, show_exception
-
+from pyrogram.enums import ParseMode 
 
 @Client.on_message(command("google"))
 async def google(_: Client, msg: Message):
@@ -31,14 +31,14 @@ async def google(_: Client, msg: Message):
         text = f"🔎 | **Google** | `{pattern}`\n{links}"
         await msg.edit_text(
             text=text,
-            parse_mode='md',
+            parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
     except FloodWait as e:
         await asyncio.sleep(e.x)
         await msg.edit_text(
             text=text,
-            parse_mode='md',
+            parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
     except Exception as e:

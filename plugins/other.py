@@ -7,7 +7,7 @@ from pyrogram.errors import FloodWait, RPCError
 from pyrogram.types import Message
 from tools.helpers import delete_this, escape_markdown
 from tools.sessions import session
-
+from pyrogram.enums import ParseMode 
 
 @Client.on_message(command("diss"))
 async def diss(_: Client, msg: Message):
@@ -22,10 +22,18 @@ async def diss(_: Client, msg: Message):
 async def tg(_: Client, msg: Message):
     """舔狗"""
     symbol = '👅 '
-    api = 'http://ovooa.com/API/tgrj/api.php'
+    # api = 'http://ovooa.com/API/tgrj/api.php'
+    api='https://www.xzccc.com/api/dog/'
     await msg.edit_text(f"{symbol}It's preparating.")
     await get_api(api=api, msg=msg)
 
+@Client.on_message(command('kfc'))
+async def kfc(_: Client, msg: Message):
+    """舔狗"""
+    symbol = 'vm50ing... '
+    api='https://kfc-crazy-thursday.vercel.app/api/index'
+    await msg.edit_text(f"{symbol}It's preparating.")
+    await get_api(api=api, msg=msg)
 
 async def get_api(api: str, msg: Message) -> None:
     for _ in range(10):
@@ -41,10 +49,10 @@ async def get_api(api: str, msg: Message) -> None:
         words = f"{msg.reply_to_message.from_user.mention(style='md')} {text}" \
             if msg.reply_to_message and msg.reply_to_message.from_user else text
         try:
-            await msg.edit_text(words, parse_mode='md')
+            await msg.edit_text(words, parse_mode=ParseMode.MARKDOWN)
         except FloodWait as e:
             await asyncio.sleep(e.x)
-            await msg.edit_text(words, parse_mode='md')
+            await msg.edit_text(words, parse_mode=ParseMode.MARKDOWN)
         except RPCError as e:
             logger.error(e)
         await logger.complete()

@@ -165,13 +165,22 @@ ipcheck:
   cmd: ipcheck
   format: -ipcheck <IP|域名> <端口|无>
   usage: 无端口参数时，查询IP或域名是否被阻断；有则查询端口是否开启
-  
+
 bc:
   cmd: bc
   format: -bc num from to
-  usage: 加密货币转换
-  
+  usage: 加密货币转换 -bc 1000 jpy usd
+
 mtts:
   cmd: mtts
   format: -mtts text
   usage: tts AI 语音转换,-mtts list zh 模糊搜索列出含有zh字符的语音模型, -mtts set zh-CN-YunfengNeural 使用zh-CN-YunfengNeural语音模型
+bin:
+  cmd: bin
+  format: -bin cardnumber
+  usage: 银行卡信息查询
+
+kfc:
+  cmd: kfc
+  format: -kfc
+  usage: 疯狂星期四文案

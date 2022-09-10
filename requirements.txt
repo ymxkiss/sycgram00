@@ -14,7 +14,7 @@ lxml==4.8.0
 multidict==6.0.2
 Pillow==9.1.0
 pyaes==1.6.1
-Pyrogram==1.4.12
+Pyrogram==2.0.51
 PySocks==1.7.1
 PyYAML==6.0
 soupsieve==2.3.1

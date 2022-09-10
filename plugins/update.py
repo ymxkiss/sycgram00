@@ -12,13 +12,13 @@ from tools.helpers import Parameters, show_cmd_tip, show_exception
 from tools.updates import (get_alias_of_cmds, is_latest_version,
                            pull_and_update_command_yml, reset_cmd_alias,
                            update_cmd_alias, update_cmd_prefix)
-
+from pyrogram.enums import ParseMode 
 
 @Client.on_message(command("restart"))
 async def restart(_: Client, msg: Message):
     """重启"""
     text = f"**{SYCGRAM_INFO}**\n> # `Restarting {SYCGRAM} ...`"
-    await msg.edit_text(text=text, parse_mode='md')
+    await msg.edit_text(text=text, parse_mode=ParseMode.MARKDOWN)
     sys.exit()
 
 
@@ -36,13 +36,13 @@ async def update(_: Client, msg: Message):
         except Exception as e:
             return await show_exception(msg, e)
         if res:
-            return await msg.edit_text(version_info, parse_mode='md')
+            return await msg.edit_text(version_info, parse_mode=ParseMode.MARKDOWN)
         else:
             text = f"**{SYCGRAM_INFO}**\n> # `Updating to the latest version.`"
     else:
         text = f"**{SYCGRAM_INFO}**\n> # `Forcing to update to the latest version.`"
 
-    await msg.edit_text(text, parse_mode='md')
+    await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
     try:
         await pull_and_update_command_yml()
         p = Popen(UPDATE_CMD, stdout=PIPE, shell=True)
@@ -54,7 +54,7 @@ async def update(_: Client, msg: Message):
     else:
         text = version_info
     finally:
-        await msg.edit_text(text, parse_mode='md')
+        await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
 @Client.on_message(command("prefix"))
@@ -73,17 +73,17 @@ async def prefix(_: Client, msg: Message):
 
     elif len(pfx) == 0 or len(pfx) > 1 or pfx not in punctuation:
         text = f"**{SYCGRAM_WARNING}**\n> # `Prefix must be one of {' '.join(punctuation)}`"
-        await msg.edit_text(text, parse_mode='md')
+        await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
         return
     try:
         update_cmd_prefix(pfx)
     except Exception as e:
         text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
         logger.error(e)
-        await msg.edit_text(text, parse_mode='md')
+        await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
     else:
         text = f"**{SYCGRAM_INFO}**\n> # `Restarting prefix of all commands.`"
-        await msg.edit_text(text, parse_mode='md')
+        await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
         sys.exit()
 
 
@@ -102,10 +102,10 @@ async def alias(_: Client, msg: Message):
         except Exception as e:
             text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
             logger.error(e)
-            await msg.edit_text(text, parse_mode='md')
+            await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
         else:
             text = f"**{SYCGRAM_INFO}**\n> # `Updating alias of <{source}> to <{to}> ...`"
-            await msg.edit_text(text, parse_mode='md')
+            await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
             sys.exit()
 
     elif len(args) == 2 and args[0] == 'reset':
@@ -115,10 +115,10 @@ async def alias(_: Client, msg: Message):
         except Exception as e:
             text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
             logger.error(e)
-            await msg.edit_text(text, parse_mode='md')
+            await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
         else:
             text = f"**{SYCGRAM_INFO}**\n> # `Resetting alias of <{source}> ...`"
-            await msg.edit_text(text, parse_mode='md')
+            await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
             sys.exit()
 
     elif len(args) == 1 and args[0] == 'list':
@@ -129,9 +129,9 @@ async def alias(_: Client, msg: Message):
         except Exception as e:
             text = f"**{SYCGRAM_ERROR}**\n> # `{e}`"
             logger.error(e)
-            await msg.edit_text(text, parse_mode='md')
+            await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
         else:
-            await msg.edit_text(text, parse_mode='md')
+            await msg.edit_text(text, parse_mode=ParseMode.MARKDOWN)
 
     else:
         await show_cmd_tip(msg, cmd)
