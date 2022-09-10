@@ -53,15 +53,16 @@ async def cc(cli: Client, msg: Message):
             chat_id=msg.chat.id, limit=1000,
             from_user=from_user_id,
         ):
-            if target.message_id > 1 and (target.from_user or target.sender_chat):
-                cc_msgs.append(target.message_id)
+            if target.id > 1 and (target.from_user or target.sender_chat):
+                cc_msgs.append(target.id)
                 if len(cc_msgs) == cc_times:
                     break
     else:
-        async for target in cli.iter_history(msg.chat.id, limit=1000):
-            if target.message_id > 1 and target.from_user and \
+        async for target in cli.get_chat_history(msg.chat.id, limit=1000):
+            print("traget 类型",type(target))
+            if target.id > 1 and target.from_user and \
                     target.from_user.id == replied_msg.from_user.id:
-                cc_msgs.append(target.message_id)
+                cc_msgs.append(target.id)
                 if len(cc_msgs) == cc_times:
                     break
 

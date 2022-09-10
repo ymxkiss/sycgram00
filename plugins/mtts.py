@@ -52,6 +52,7 @@ async def mtts(cli: Client, msg: Message):
     """
     cmd, opt = Parameters.get(msg)
     replied_msg = msg.reply_to_message
+    print("要恢复的信息",replied_msg)
     cmtts = async_Mtts()
     if opt.startswith("set "):
         model_name = opt.split(" ")[1]
@@ -86,11 +87,11 @@ async def mtts(cli: Client, msg: Message):
             await delete_this(msg)
         else:
             await msg.reply_voice(
-                mp3_path, reply_to_message_id=replied_msg["message_id"])
+                mp3_path, reply_to_message_id=replied_msg.id)
             await delete_this(msg)
     elif replied_msg is not None:
         config = await config_check()
-        mp3_buffer = await cmtts.mtts(text=replied_msg["text"],
+        mp3_buffer = await cmtts.mtts(text=replied_msg.text,
                                       short_name=config["short_name"],
                                       style=config["style"],
                                       rate=config["rate"],
@@ -98,7 +99,7 @@ async def mtts(cli: Client, msg: Message):
                                       kmhz=config["kmhz"])
         mp3_path = await save_audio(mp3_buffer)
         await msg.reply_voice(mp3_path,
-                              reply_to_message_id=replied_msg["message_id"])
+                              reply_to_message_id=replied_msg.id)
         await delete_this(msg)
     elif opt is None or opt == " ":
         await msg.edit_text("error, please use help command to show use case")

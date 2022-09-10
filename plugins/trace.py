@@ -18,7 +18,7 @@ async def trace_event(cli: Client, msg: Message):
         try:
             emoji = store.get_data(STORE_TRACE_DATA).get(user.id)
             await cli.send_reaction(
-                msg.chat.id, msg.message_id, emoji
+                msg.chat.id, msg.id, emoji
             )
         except BadRequest:
             failure = f"Group named <{msg.chat.title}> can't use {emoji} to react."
@@ -48,7 +48,7 @@ async def trace(cli: Client, msg: Message):
         try:
             await cli.send_reaction(
                 msg.chat.id,
-                replied_msg.message_id,
+                replied_msg.id,
                 emoji
             )
         except RPCError as e:

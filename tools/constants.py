@@ -1,3 +1,4 @@
+
 from typing import Dict, List
 
 # Some params of sycgram
@@ -51,7 +52,7 @@ STICKER_ERROR_LIST: List[str] = [
 ]
 
 # ------------- cc & trace --------------
-REACTIONS: list[str] = ['👍', '👎', '❤️', '🔥', '🥰', '👏',
+REACTIONS= ['👍', '👎', '❤️', '🔥', '🥰', '👏',
                         '😁', '🤔', '🤯', '😱', '🤬', '😢',
                         '🎉', '🤩', '🤮', '💩']
 CC_MAX_TIMES: int = 233

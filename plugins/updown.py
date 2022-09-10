@@ -15,7 +15,7 @@ async def upload(cli: Client, msg: Message):
     cmd, where = Parameters.get(msg)
     if not where:
         return await show_cmd_tip(msg, cmd)
-    replied_msg_id = msg.reply_to_message.message_id \
+    replied_msg_id = msg.reply_to_message.id \
         if msg.reply_to_message else None
     _, filename = os.path.split(where)
     try:

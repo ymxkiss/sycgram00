@@ -18,7 +18,7 @@ async def ghost_event(cli: Client, msg: Message):
     """自动标记对话为<已读>"""
     if await get_ghost_to_read(msg.chat.id):
         try:
-            await cli.read_history(msg.chat.id)
+            await cli.get_chat_history(msg.chat.id)
         except RPCError as e:
             logger.error(e)
         else:

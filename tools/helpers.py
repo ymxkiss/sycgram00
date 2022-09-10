@@ -90,7 +90,7 @@ def get_default_pkg(user: User) -> Tuple[str]:
 
 
 def is_deleted_id(msg: Message) -> bool:
-    return bool(msg.message_id > 1 and msg.from_user and msg.from_user.is_self)
+    return bool(msg.id > 1 and msg.from_user and msg.from_user.is_self)
 
 
 async def show_exception(msg: Message, e: Any) -> None:

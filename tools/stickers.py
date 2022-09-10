@@ -162,12 +162,14 @@ class StickerAdder:
     async def mark_as_read(self) -> None:
         """自动已读机器人的消息"""
         try:
-            await self._cli.read_history(self._bot_id)
+            await self._cli.get_chat_history(self._bot_id)
         except FloodWait as e:
             await asyncio.sleep(e.x)
-            await self._cli.read_history(self._bot_id)
+            await self._cli.get_chat_history(self._bot_id)
         except RPCError as e:
             logger.warning(e)
+        except Exception as e:
+            logger.error(e)
 
     async def __wait_for(self) -> None:
         """等待贴纸机器人(`@Stickers`)的回应"""

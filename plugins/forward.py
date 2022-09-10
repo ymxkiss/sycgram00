@@ -47,7 +47,7 @@ async def copy_forward(cli: Client, msg: Message):
             await cli.copy_message(
                 chat_id=msg.chat.id,
                 from_chat_id=msg.chat.id,
-                message_id=msg.reply_to_message.message_id,
+                message_id=msg.reply_to_message.id,
                 disable_notification=True
             )
         except RPCError as e:

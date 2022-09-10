@@ -76,7 +76,7 @@ async def sticker(cli: Client, msg: Message):
 
     # 开始前的检查
     await msg.edit_text('👆 Working on adding stickers ...')
-    await cli.unblock_user(STICKER_BOT)
+    status = await cli.unblock_user(STICKER_BOT)
     # 开始偷贴纸
     async with sticker_locker.get_lock():
         try:

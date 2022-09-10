@@ -30,10 +30,10 @@ async def dme(client: Client, message: Message):
                 ids_deleted.clear()
 
     # 第一阶段，暴力扫描最近的消息，这些消息有可能无法搜索到
-    async for msg in client.iter_history(message.chat.id, limit=get_iterlimit(limit)):
+    async for msg in client.get_chat_history(message.chat.id, limit=get_iterlimit(limit)):
         if is_deleted_id(msg):
-            logger.info(f'{cmd} | scanning | {msg.message_id}')
-            ids_deleted.append(msg.message_id)
+            logger.info(f'{cmd} | scanning | {msg.id}')
+            ids_deleted.append(msg.id)
             counter = counter + 1
             await delete_messages(client, ids_deleted)
             if counter == limit:
@@ -47,9 +47,9 @@ async def dme(client: Client, message: Message):
             limit=limit - counter,
             from_user='me',
         ):
-            if is_deleted_id(msg) and msg.message_id not in ids_deleted:
-                logger.info(f'{cmd} | searching | {msg.message_id}')
-                ids_deleted.append(msg.message_id)
+            if is_deleted_id(msg) and msg.id not in ids_deleted:
+                logger.info(f'{cmd} | searching | {msg.id}')
+                ids_deleted.append(msg.id)
                 counter = counter + 1
                 await delete_messages(client, ids_deleted)
                 if counter == limit:
