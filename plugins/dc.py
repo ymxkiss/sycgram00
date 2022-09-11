@@ -2,7 +2,7 @@ from core import command
 from pyrogram import Client
 from pyrogram.types import Message
 from tools.helpers import get_dc_text
-
+from pyrogram.enums import ParseMode 
 
 @Client.on_message(command('dc'))
 async def dc(_: Client, msg: Message):
