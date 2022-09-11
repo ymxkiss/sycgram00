@@ -46,7 +46,7 @@ async def get_api(api: str, msg: Message) -> None:
         except Exception as e:
             logger.error(e)
             continue
-        words = f"{msg.reply_to_message.from_user.mention(style='md')} {text}" \
+        words = f"{msg.reply_to_message.from_user.mention(style=ParseMode.MARKDOWN)} {text}" \
             if msg.reply_to_message and msg.reply_to_message.from_user else text
         try:
             await msg.edit_text(words, parse_mode=ParseMode.MARKDOWN)
