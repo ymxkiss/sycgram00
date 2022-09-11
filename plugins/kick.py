@@ -44,7 +44,7 @@ async def sb(cli: Client, msg: Message):
     await cli.delete_user_history(msg.chat.id, target.id)
 
     # Inform
-    text = f"😂 Kick {target.mention(style='md')} in {counter} common groups."
+    text = f"😂 Kick {target.mention(style=ParseMode.MARKDOWN)} in {counter} common groups."
     await msg.edit_text(text)
     await asyncio.sleep(10)
     await delete_this(msg)
