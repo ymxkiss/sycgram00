@@ -62,15 +62,15 @@ async def trace(cli: Client, msg: Message):
             # 追踪列表中没有，则添加
             if not trace_data.get(user.id):
                 trace_data[user.id] = emoji
-                text = f"✅ 添加 {user.mention(style='md')} 到trace列表"
+                text = f"✅ 添加 {user.mention(style=ParseMode.MARKDOWN)} 到trace列表"
                 logger.success(text)
             # 追踪列表有，则删除
             elif trace_data.pop(user.id, False):
-                text = f"✅ 将 {user.mention(style='md')} 从trace列表移除"
+                text = f"✅ 将 {user.mention(style=ParseMode.MARKDOWN)} 从trace列表移除"
                 logger.success(text)
             # 删除失败？？
             else:
-                text = f"❌ 竟然将 {user.mention(style='md')} 从trace列表移除失败！！!"
+                text = f"❌ 竟然将 {user.mention(style=ParseMode.MARKDOWN)} 从trace列表移除失败！！!"
                 logger.warning(text)
         elif opt == 'clear':
             trace_data.clear()
