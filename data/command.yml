@@ -184,3 +184,8 @@ kfc:
   cmd: kfc
   format: -kfc
   usage: 疯狂星期四文案
+
+bye:
+  cmd: bye
+  format: -bye
+  usage: 删除当前对话的消息（仅私人聊天）

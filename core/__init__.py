@@ -9,7 +9,15 @@ app = Client(
     "./data/app",
     api_id=api_id,
     api_hash=api_hash,
-    plugins=dict(root="plugins")
+    plugins=dict(root="plugins"),
+    # proxy={
+    #     # "socks4", "socks5" and "http" are supported
+    #     "scheme": "socks5",
+    #     "hostname": "127.0.0.1",
+    #     "port": 7890,
+    #     #  "username": "username",
+    #     #  "password": "password"
+    # },
 )
 
 
