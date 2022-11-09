@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 
-CONTAINER_NAME="sycgram"
+CONTAINER_NAME="sycgram0190"
 GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
 PROJECT_PATH="/opt/${CONTAINER_NAME}"
@@ -55,7 +55,7 @@ delete_old_image_and_container(){
     if [[ ${opt} != "yes" ]]; then
         exit 0
     fi
-    remote_file="https://raw.githubusercontent.com/iwumingz/sycgram/main/data/command.yml"
+    remote_file="https://raw.githubusercontent.com/ymxkiss/sycgram/main/data/command.yml"
     # 本地file
     local_cmd_file="${PROJECT_PATH}/data/command.yml"
     if [[ -f ${local_cmd_file} ]]; then
