@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 
-CONTAINER_NAME="sycgram"
+CONTAINER_NAME="sycgram0190"
 CONTAINER_NAME00="sycgram"
 GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME00}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
