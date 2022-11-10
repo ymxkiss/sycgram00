@@ -133,7 +133,7 @@ install_sycgram(){
     delete_old_image_and_container;
 
     echo -e "${yellow}正在拉取镜像...${plain}"
-    docker pull ${GITHUB_IMAGE_PATH}:latest
+    #docker pull ${GITHUB_IMAGE_PATH}:latest
 
     # 容器时区与宿主机同步，请自行修改宿主机时区
     # 注意这里是docker的一些默认路径
