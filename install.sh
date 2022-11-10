@@ -68,11 +68,7 @@ delete_old_image_and_container(){
     fi
     curl -fsL ${remote_file} > ${local_cmd_file}
 
-    echo -e "${yellow}正在删除旧版本容器...${plain}"
-    docker rm -f $(docker ps -a | grep ${CONTAINER_NAME} | awk '{print $1}')
 
-    echo -e "${yellow}正在删除旧版本镜像...${plain}"
-    docker image rm -f $(docker images | grep ${CONTAINER_NAME} | awk '{print $3}')
 }
 
 check_and_create_config(){
@@ -133,7 +129,7 @@ install_sycgram(){
     delete_old_image_and_container;
 
     echo -e "${yellow}正在拉取镜像...${plain}"
-    #docker pull ${GITHUB_IMAGE_PATH}:latest
+    docker pull ${GITHUB_IMAGE_PATH}:latest
 
     # 容器时区与宿主机同步，请自行修改宿主机时区
     # 注意这里是docker的一些默认路径
