@@ -2,7 +2,8 @@
 clear
 
 CONTAINER_NAME="sycgram"
-GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME}"
+CONTAINER_NAME00="sycgram"
+GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME00}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
 PROJECT_PATH="/opt/${CONTAINER_NAME}"
 PROJECT_VERSION="v1.2.0"
@@ -68,10 +69,10 @@ delete_old_image_and_container(){
     curl -fsL ${remote_file} > ${local_cmd_file}
 
     echo -e "${yellow}正在删除旧版本容器...${plain}"
-    docker rm -f $(docker ps -a | grep ${CONTAINER_NAME} | awk '{print $1}')
+    docker rm -f $(docker ps -a | grep ${CONTAINER_NAME00} | awk '{print $1}')
 
     echo -e "${yellow}正在删除旧版本镜像...${plain}"
-    docker image rm -f $(docker images | grep ${CONTAINER_NAME} | awk '{print $3}')
+    docker image rm -f $(docker images | grep ${CONTAINER_NAME00} | awk '{print $3}')
 }
 
 check_and_create_config(){
