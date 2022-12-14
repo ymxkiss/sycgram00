@@ -24,7 +24,7 @@ async def restart(_: Client, msg: Message):
 
 @Client.on_message(command("update"))
 async def update(_: Client, msg: Message):
-    """更新sycgram到主分支的最新版本"""
+    """更新ymsycgrambot到主分支的最新版本"""
     # arg - 是否强制更新
     _, arg = Parameters.get(msg)
     arg = False if arg != "force" else True
