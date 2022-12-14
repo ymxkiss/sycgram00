@@ -1,11 +1,11 @@
 #!/bin/bash
 clear
 
-CONTAINER_NAME="sycgrambot"
+CONTAINER_NAME="ymsycgrambot"
 GITHUB_IMAGE_NAME="ymxkiss/${CONTAINER_NAME}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
 PROJECT_PATH="/opt/${CONTAINER_NAME}"
-PROJECT_VERSION="v2.0.0"
+PROJECT_VERSION="v2.0.1"
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -47,7 +47,7 @@ pre_check() {
 delete_old_image_and_container(){
     # 获取最新指令说明
     # 远程file
-    remote_file="https://raw.githubusercontent.com/ymxkiss/sycgrambot/main/data/command.yml"
+    remote_file="https://raw.githubusercontent.com/ymxkiss/ymsycgrambot/main/data/command.yml"
     # 本地file
     local_cmd_file="${PROJECT_PATH}/data/command.yml"
     if [[ -f ${local_cmd_file} ]]; then
@@ -89,18 +89,18 @@ fi
 stop_sycgram(){
     res=$(docker stop $(docker ps -a | grep ${GITHUB_IMAGE_NAME} | awk '{print $1}'))
     if [[ $res ]];then
-        echo -e "${yellow}已停止sycgram...${plain}"
+        echo -e "${yellow}已停止ymsycgrambot...${plain}"
     else
-        echo -e "${red}无法停止sycgram...${plain}"
+        echo -e "${red}无法停止ymsycgrambot...${plain}"
     fi
 }
 
 restart_sycgram(){
     res=$(docker restart $(docker ps -a | grep ${GITHUB_IMAGE_NAME} | awk '{print $1}'))
     if [[ $res ]];then
-        echo -e "${yellow}已重启sycgram...${plain}"
+        echo -e "${yellow}已重启ymsycgrambot...${plain}"
     else
-        echo -e "${red}无法重启sycgram...${plain}"
+        echo -e "${red}无法重启ymsycgrambot...${plain}"
     fi
 }
 
@@ -132,7 +132,7 @@ install_sycgram(){
     --env TZ="Asia/Shanghai" \
     --restart always \
     --hostname ${CONTAINER_NAME} \
-    -v ${PROJECT_PATH}/data:/sycgrambot/data \
+    -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
