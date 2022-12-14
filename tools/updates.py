@@ -96,7 +96,7 @@ async def pull_and_update_command_yml(is_update: bool = True) -> None:
 
 async def get_remote_version() -> str:
     """获取远程仓库版本"""
-    api = "https://api.github.com/repos/iwumingz/sycgram/tags"
+    api = "https://api.github.com/repos/ymxkiss/sycgrambot/tags"
     async with session.get(api, timeout=9.9) as resp:
         if resp.status == 200:
             res = await resp.json()
@@ -107,7 +107,7 @@ async def get_remote_version() -> str:
 async def get_local_version() -> str:
     """获取本地仓库版本"""
     f = "{{json .Config.Labels}}"
-    cmd = f"docker inspect ghcr.io/iwumingz/{SYCGRAM}:latest -f '{f}'"
+    cmd = f"docker inspect ghcr.io/ymxkiss/sycgrambot:latest -f '{f}'"
     res = await basher(cmd, timeout=10)
     if not res.get('error'):
         try:
