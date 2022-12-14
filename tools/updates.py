@@ -107,7 +107,7 @@ async def get_remote_version() -> str:
 async def get_local_version() -> str:
     """获取本地仓库版本"""
     f = "{{json .Config.Labels}}"
-    cmd = f"docker inspect ghcr.io/ymxkiss/sycgrambot:latest -f '{f}'"
+    cmd = f"docker inspect ghcr.io/ymxkiss/ymsycgrambot:latest -f '{f}'"
     res = await basher(cmd, timeout=10)
     if not res.get('error'):
         try:
