@@ -120,7 +120,10 @@ reinstall_sycgram(){
 
 install_sycgram(){
 
-
+    printf "请输入 PagerMaid 容器的名称："
+    read -r container_name <&1
+    
+    PROJECT_PATHps="/opt/${container_name}"
 
     pre_check;
     check_and_create_config;
@@ -131,10 +134,10 @@ install_sycgram(){
 
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
-    --name ${psname} \
+    --name ${container_name} \
     --env TZ="Asia/Shanghai" \
     --restart always \
-    --hostname ${CONTAINER_NAME} \
+    --hostname ${container_name} \
     -v ${PROJECT_PATHps}/data:/ymsycgrambot/data \
     ${GITHUB_IMAGE_PATH}:latest
 }
@@ -155,8 +158,6 @@ show_menu() {
         exit 0
         ;;
     1)
-	    read -p "请输入容器名称: " psname
-	    PROJECT_PATHps="/opt/${psname}"
         install_sycgram "-it"
         ;;
     2)
