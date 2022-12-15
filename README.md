@@ -1,4 +1,4 @@
-# sycgrambot---拷贝了猪猪子的库，有需要的自行下载
+# sycgram---拷贝了猪猪子的库，有需要的自行下载
 
 ## 配置
 
@@ -10,7 +10,7 @@
 
 ```shell
 # 脚本的【安装】都是前台运行，完成安装后如无报错可先后使用Ctrl+P、Ctrl+Q挂到后台运行
-bash <(curl -fsL "https://raw.githubusercontent.com/ymxkiss/sycgrambot/main/install.sh")
+bash <(curl -fsL "https://raw.githubusercontent.com/ymxkiss/ymsycgrambot/main/install.sh")
 ```
 
 ## 更新存在的问题
