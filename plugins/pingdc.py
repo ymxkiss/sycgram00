@@ -25,7 +25,7 @@ async def pingdc(_: Client, msg: Message):
         15: "140.238.204.248"
     }
     data = []
-    for dc in range(1, 6):
+    for dc in range(1, 16):
         result = await execute(f"ping -c 1 {DCs[dc]} | awk -F '/' " + "'END {print $5}'")
         output = result.get('output')
         data.append(output.replace('\n', '') if output else '-1')
