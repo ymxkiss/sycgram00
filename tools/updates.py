@@ -96,7 +96,7 @@ async def pull_and_update_command_yml(is_update: bool = True) -> None:
 
 async def get_remote_version() -> str:
     """获取远程仓库版本"""
-    api = "https://api.github.com/repos/ymxkiss/sycgrambot/tags"
+    api = "https://api.github.com/repos/ymxkiss/ymsycgrambot/tags"
     async with session.get(api, timeout=9.9) as resp:
         if resp.status == 200:
             res = await resp.json()
