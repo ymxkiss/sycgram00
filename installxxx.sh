@@ -131,11 +131,11 @@ install_sycgram(){
 
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
-    --name ${CONTAINER_NAME} \
+    --name ${psname} \
     --env TZ="Asia/Shanghai" \
     --restart always \
     --hostname ${CONTAINER_NAME} \
-    -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
+    -v ${PROJECT_PATHps}/data:/ymsycgrambot/data \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
@@ -156,6 +156,7 @@ show_menu() {
         ;;
     1)
 	    read -p "请输入容器名称: " psname
+	    PROJECT_PATHps="/opt/${psname}"
         install_sycgram "-it"
         ;;
     2)
