@@ -1,12 +1,11 @@
 #!/bin/bash
 clear
 
-CONTAINER_NAME="sycgram3919"
-CONTAINER_NAME00="sycgram"
-GITHUB_IMAGE_NAME="iwumingz/${CONTAINER_NAME00}"
+CONTAINER_NAME="ymsycgrambot"
+GITHUB_IMAGE_NAME="ymxkiss/${CONTAINER_NAME}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
 PROJECT_PATH="/opt/${CONTAINER_NAME}"
-PROJECT_VERSION="v1.2.0"
+PROJECT_VERSION="v2.0.3"
 
 red='\033[0;31m'
 green='\033[0;32m'
@@ -48,19 +47,11 @@ pre_check() {
 delete_old_image_and_container(){
     # 获取最新指令说明
     # 远程file
-    echo -e "${red}警告！警告！警告！${plain}"
-    echo -e "${red}警告：通过脚本更新sycgram可能会导致您的command.yml被远程配置覆盖${plain}"
-    echo -e "${yellow}提示：如果您的command.yml相对不重要，您可以直接更新${plain}"
-    echo -e "${yellow}建议：通过sycgram指令更新${plain}"
-    read -p "是否继续，是则请输入yes：" opt
-    if [[ ${opt} != "yes" ]]; then
-        exit 0
-    fi
-    remote_file="https://raw.githubusercontent.com/iwumingz/sycgram/main/data/command.yml"
+    remote_file="https://raw.githubusercontent.com/ymxkiss/ymsycgrambot/main/data/command.yml"
     # 本地file
     local_cmd_file="${PROJECT_PATH}/data/command.yml"
     if [[ -f ${local_cmd_file} ]]; then
-        t=$(date "+%Y_%m_%d_%H_%M_%M")
+        t=$(date "+%H_%M_%M")
         mkdir -p "${PROJECT_PATH}/data/command" >/dev/null 2>&1
 
         echo -e "${yello}正在备份${plain} >>> ${local_cmd_file}"
@@ -68,7 +59,11 @@ delete_old_image_and_container(){
     fi
     curl -fsL ${remote_file} > ${local_cmd_file}
 
+    echo -e "${yellow}正在删除旧版本容器...${plain}"
+    docker rm -f $(docker ps -a | grep ${CONTAINER_NAME} | awk '{print $1}')
 
+    echo -e "${yellow}正在删除旧版本镜像...${plain}"
+    docker image rm -f $(docker images | grep ${CONTAINER_NAME} | awk '{print $3}')
 }
 
 check_and_create_config(){
@@ -94,18 +89,18 @@ fi
 stop_sycgram(){
     res=$(docker stop $(docker ps -a | grep ${GITHUB_IMAGE_NAME} | awk '{print $1}'))
     if [[ $res ]];then
-        echo -e "${yellow}已停止sycgram...${plain}"
+        echo -e "${yellow}已停止ymsycgrambot...${plain}"
     else
-        echo -e "${red}无法停止sycgram...${plain}"
+        echo -e "${red}无法停止ymsycgrambot...${plain}"
     fi
 }
 
 restart_sycgram(){
     res=$(docker restart $(docker ps -a | grep ${GITHUB_IMAGE_NAME} | awk '{print $1}'))
     if [[ $res ]];then
-        echo -e "${yellow}已重启sycgram...${plain}"
+        echo -e "${yellow}已重启ymsycgrambot...${plain}"
     else
-        echo -e "${red}无法重启sycgram...${plain}"
+        echo -e "${red}无法重启ymsycgrambot...${plain}"
     fi
 }
 
@@ -124,6 +119,9 @@ reinstall_sycgram(){
 }
 
 install_sycgram(){
+
+
+
     pre_check;
     check_and_create_config;
     delete_old_image_and_container;
@@ -131,18 +129,13 @@ install_sycgram(){
     echo -e "${yellow}正在拉取镜像...${plain}"
     docker pull ${GITHUB_IMAGE_PATH}:latest
 
-    # 容器时区与宿主机同步，请自行修改宿主机时区
-    # 注意这里是docker的一些默认路径
-    # 如果你有过路径更改，请按需修改即可
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
     --name ${CONTAINER_NAME} \
-    --env TZ=$(cat /etc/timezone) \
+    --env TZ="Asia/Shanghai" \
     --restart always \
     --hostname ${CONTAINER_NAME} \
-    -v ${PROJECT_PATH}/data:/sycgram/data \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /usr/bin/docker:/usr/bin/docker \
+    -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
@@ -162,6 +155,7 @@ show_menu() {
         exit 0
         ;;
     1)
+	    read -p "请输入容器名称: " psname
         install_sycgram "-it"
         ;;
     2)
