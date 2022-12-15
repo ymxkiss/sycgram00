@@ -4,7 +4,7 @@ clear
 CONTAINER_NAME="ymsycgrambot"
 GITHUB_IMAGE_NAME="ymxkiss/${CONTAINER_NAME}"
 GITHUB_IMAGE_PATH="ghcr.io/${GITHUB_IMAGE_NAME}"
-PROJECT_PATH="/opt/${CONTAINER_NAME}"
+#PROJECT_PATH="/opt/${CONTAINER_NAME}"
 PROJECT_VERSION="v2.0.3"
 
 red='\033[0;31m'
@@ -119,6 +119,12 @@ reinstall_sycgram(){
 }
 
 install_sycgram(){
+
+    printf "请输入 PagerMaid 容器的名称："
+    read -r container_name <&1
+    
+    PROJECT_PATH="/opt/${container_name}"
+
     pre_check;
     check_and_create_config;
     delete_old_image_and_container;
@@ -128,10 +134,10 @@ install_sycgram(){
 
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
-    --name ${CONTAINER_NAME} \
+    --name ${container_name} \
     --env TZ="Asia/Shanghai" \
     --restart always \
-    --hostname ${CONTAINER_NAME} \
+    --hostname ${container_name} \
     -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
     ${GITHUB_IMAGE_PATH}:latest
 }
