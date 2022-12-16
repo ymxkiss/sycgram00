@@ -13,5 +13,7 @@ RUN apk add --no-cache libjpeg libwebp libpng py3-lxml bc neofetch libc6-compat 
     && rm -rf .git .github .gitignore Dockerfile install.sh LICENSE README.md requirements.txt
 
 VOLUME /ymsycgrambot/data
+VOLUME /ymsycgrambot/tools
+VOLUME /ymsycgrambot/plugins
 
 ENTRYPOINT ["/usr/local/bin/python3", "-u", "main.py"]
