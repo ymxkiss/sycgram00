@@ -87,7 +87,11 @@ fi
 }
 
 stop_sycgram(){
-    res=$(docker stop $(docker ps -a | grep ${GITHUB_IMAGE_NAME} | awk '{print $1}'))
+
+    printf "请输入 sycgrambot 容器的名称："
+    read -r container_name <&1
+    
+    res=$(docker stop $(docker ps -a | grep ${container_name} | awk '{print $1}'))
     if [[ $res ]];then
         echo -e "${yellow}已停止ymsycgrambot...${plain}"
     else
@@ -96,7 +100,13 @@ stop_sycgram(){
 }
 
 restart_sycgram(){
-    res=$(docker restart $(docker ps -a | grep ${GITHUB_IMAGE_NAME} | awk '{print $1}'))
+
+    printf "请输入 sycgrambot 容器的名称："
+    read -r container_name <&1
+    
+
+    
+    res=$(docker restart $(docker ps -a | grep ${container_name} | awk '{print $1}'))
     if [[ $res ]];then
         echo -e "${yellow}已重启ymsycgrambot...${plain}"
     else
@@ -114,13 +124,18 @@ uninstall_sycgram(){
 }
 
 reinstall_sycgram(){
+
+    printf "请输入 sycgrambot 容器的名称："
+    read -r container_name <&1
+    
+    PROJECT_PATH="/opt/${container_name}"
     rm -rf ${PROJECT_PATH}
     install_sycgram "-it"
 }
 
 install_sycgram(){
 
-    printf "请输入 PagerMaid 容器的名称："
+    printf "请输入 sycgrambot 容器的名称："
     read -r container_name <&1
     
     PROJECT_PATH="/opt/${container_name}"
