@@ -136,7 +136,7 @@ install_sycgram(){
     --env TZ="Asia/Shanghai" \
     --restart always \
     --hostname ${container_name} \
-    -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
+    -v ${PROJECT_PATH}:/ymsycgrambot \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
