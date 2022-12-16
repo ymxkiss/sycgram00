@@ -137,8 +137,6 @@ install_sycgram(){
     --restart always \
     --hostname ${container_name} \
     -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
-    -v ${PROJECT_PATH}/tools:/ymsycgrambot/tools \
-    -v ${PROJECT_PATH}/plugins:/ymsycgrambot/plugins \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
