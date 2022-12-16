@@ -139,9 +139,6 @@ install_sycgram(){
     -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
     -v ${PROJECT_PATH}/tools:/ymsycgrambot/tools \
     -v ${PROJECT_PATH}/plugins:/ymsycgrambot/plugins \
-    -v ${PROJECT_PATH}/core:/ymsycgrambot/core \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /usr/bin/docker:/usr/bin/docker \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
