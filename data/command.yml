@@ -8,7 +8,7 @@
 # all_prefixes:"-"
 
 help:
-  all_prefixes: "-"
+  all_prefixes: "+"
   cmd: help
   format: -help <command>
   usage: 指令列表
