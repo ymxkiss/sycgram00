@@ -64,13 +64,13 @@ ex:
   usage: 汇率转换
 
 google:
-  cmd: google
-  format: -google <无|搜索内容>
+  cmd: g
+  format: -g <无|搜索内容>
   usage: 回复一条消息，或直接使用
 
 speedtest:
-  cmd: speedtest
-  format: -speedtest <无|节点ID|list|update>
+  cmd: st
+  format: -st <无|节点ID|list|update>
   usage: 服务器本地网络测速
 
 sticker:
