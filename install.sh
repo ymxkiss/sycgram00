@@ -133,7 +133,7 @@ install_sycgram(){
     echo -e "${yellow}正在启动容器...${plain}"
     docker run $1 \
     --name ${container_name} \
-    --env TZ="Asia/Shanghai" \
+    --env TZ=$(cat /etc/timezone) \
     --restart always \
     --hostname ${container_name} \
     -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
