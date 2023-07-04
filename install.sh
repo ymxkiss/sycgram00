@@ -136,7 +136,7 @@ install_sycgram(){
     --env TZ=$(cat /etc/timezone) \
     --restart always \
     --hostname ${container_name} \
-    -v ${PROJECT_PATH}/data:/ymsycgrambot/data \
+    -v ${PROJECT_PATH}/data:/sycgram/data \
     ${GITHUB_IMAGE_PATH}:latest
 }
 
