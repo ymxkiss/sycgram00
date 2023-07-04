@@ -29,8 +29,8 @@ f:
   usage: 回复一条消息，转发该消息n次。范围：1 ~ 30， 默认：1
 
 cp:
-  cmd: cp
-  format: -cp <数量>
+  cmd: re
+  format: -re <数量>
   usage: 回复一条消息，无引用转发该消息n次。范围：1 ~ 30， 默认：1
 
 ghost:
